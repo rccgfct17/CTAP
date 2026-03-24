@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>RCCG Christ The Anchor Parish - FCT Province 17</title>
+<style>
+:root{--primary:#0b5f3b;--accent:#f4c542;--bg:#f7f7f8;--text:#222;}
+*{box-sizing:border-box}body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text);margin:0}
+header{background:linear-gradient(90deg,var(--primary),#0a8a5a);color:#fff;padding:1rem}
+.container{max-width:1000px;margin:0 auto;padding:1rem}
+.nav{display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:700}
+.menu{display:flex;gap:1rem}
+.menu a{color:#fff;text-decoration:none}
+.hamburger{display:none;background:none;border:0;color:#fff;font-size:1.2rem}
+.hero{padding:3rem 1rem;text-align:center;background:#fff;margin-top:1rem;border-radius:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1rem}
+.card{background:#fff;padding:1rem;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+footer{padding:1rem;text-align:center;margin-top:1rem;color:#555}
+@media(max-width:700px){.menu{display:none}.hamburger{display:block}}
+/* simple form styles */
+input,textarea{width:100%;padding:.6rem;margin-top:.4rem;border:1px solid #ddd;border-radius:6px}
+button{background:var(--primary);color:#fff;border:0;padding:.6rem 1rem;border-radius:6px;cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="brand">RCCG Christ The Anchor - FCT Province 17</div>
+    <nav>
+      <button class="hamburger" id="navToggle">☰</button>
+      <div class="menu" id="menu">
+        <a href="#about">About</a><a href="#ministries">Ministries</a><a href="#events">Events</a><a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero card" id="home">
+    <h1>Welcome to Christ The Anchor Parish</h1>
+    <p>Join us for worship, fellowship, and community outreach in Abuja — FCT Province 17.</p>
+    <p><strong>Service times:</strong> Sundays 8:00am & 10:30am</p>
+  </section>
+
+  <section id="about" class="grid">
+    <div class="card"><h3>About Us</h3><p>We are a community committed to prayer, discipleship, and outreach.</p></div>
+    <div class="card"><h3>Ministries</h3><p>Children; Youth; Women; Men; Outreach; Media</p></div>
+  </section>
+
+  <section id="events" class="card">
+    <h3>Upcoming Events</h3>
+    <ul>
+      <li>Sunday Service — Every Sunday 8:00am & 10:30am</li>
+      <li>Prayer Meeting — Wednesdays 6:00pm</li>
+      <li>Monthly Outreach — First Saturday</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="card">
+    <h3>Contact</h3>
+    <form id="contactForm">
+      <label>Name<input type="text" id="name" required></label>
+      <label>Email<input type="email" id="email" required></label>
+      <label>Message<textarea id="message" rows="4" required></textarea></label>
+      <button type="submit">Send Message</button>
+    </form>
+    <p id="formMsg" style="color:green"></p>
+  </section>
+</main>
+
+<footer>
+  © RCCG Christ The Anchor Parish — FCT Province 17
+</footer>
+
+<script>
+document.getElementById('navToggle').addEventListener('click',()=> {
+  const m=document.getElementById('menu');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+});
+document.getElementById('contactForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  document.getElementById('formMsg').textContent = 'Thank you — we will get back to you soon.';
+  e.target.reset();
+});
+</script>
+</body>
+</html>

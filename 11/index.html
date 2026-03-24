@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCCG Christ the Anchor Parish | FCT Province 17</title>
+    <style>
+        /* Reset and Base Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; display: block; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+        /* Header & Navigation */
+        header { background: #004080; color: #fff; padding: 1rem 0; position: fixed; width: 100%; top: 0; z-index: 1000; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { font-weight: bold; transition: color 0.3s; }
+        .nav-links a:hover { color: #ffcc00; }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; }
+
+        /* Hero Section */
+        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.pexels.com/photos/33494797/pexels-photo-33494797/free-photo-of-interior-of-a-church-during-worship-service.jpeg') center/cover no-repeat; 
+                 height: 100vh; display: flex; align-items: center; text-align: center; color: #fff; margin-top: 70px; }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+        .hero-content p { font-size: 1.5rem; margin-bottom: 2rem; }
+        .btn { background: #ffcc00; color: #004080; padding: 1rem 2rem; border-radius: 5px; font-weight: bold; transition: background 0.3s; }
+        .btn:hover { background: #e6b800; }
+
+        /* Sections */
+        section { padding: 5rem 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #004080; }
+        #about { background: #fff; }
+        .about-content { display: flex; gap: 3rem; align-items: center; flex-wrap: wrap; }
+        .about-text { flex: 1; min-width: 300px; }
+        #services { background: #eef5ff; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .service-card { background: #fff; padding: 2rem; text-align: center; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        #gallery { background: #fff; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+        #contact { background: #004080; color: #fff; }
+        .contact-form { max-width: 600px; margin: 0 auto; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 1rem; margin-bottom: 1rem; border: none; border-radius: 5px; }
+        .contact-form button { background: #ffcc00; color: #004080; border: none; padding: 1rem 2rem; cursor: pointer; }
+
+        /* Footer */
+        footer { background: #002040; color: #fff; text-align: center; padding: 2rem 0; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { position: absolute; top: 100%; left: 0; width: 100%; background: #004080; flex-direction: column; display: none; }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: block; }
+            .hero-content h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container navbar">
+            <div class="logo">RCCG Christ the Anchor</div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">☰</div>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <h1>Welcome to RCCG Christ the Anchor Parish</h1>
+            <p>FCT Province 17 | The Home of Achievers</p>
+            <a href="#services" class="btn">Join Our Service</a>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>We are a parish of The Redeemed Christian Church of God (RCCG) located in Abuja, FCT Province 17. Our vision is to make heaven and take as many people with us as possible.</p>
+                    <p>Christ the Anchor Parish is a place where lives are transformed through the undiluted Word of God, vibrant worship, and loving fellowship.</p>
+                    <p>Pastor in Charge: [Insert Pastor's Name]</p>
+                </div>
+                <img src="https://media.istockphoto.com/id/157428570/photo/modern-christian-church-in-northern-minnesota-usa.jpg?s=612x612&w=0&k=20&c=STUm25Yq_rCmV0fxI59rl9qRjACxkGK-6JRGHRhOEPs=" alt="Church Building">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title">Service Times</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Sunday Worship</h3>
+                    <p>8:00 AM - 11:00 AM</p>
+                </div>
+                <div class="service-card">
+                    <h3>Digging Deep (Wednesday)</h3>
+                    <p>6:00 PM - 8:00 PM</p>
+                </div>
+                <div class="service-card">
+                    <h3>Faith Clinic (Thursday)</h3>
+                    <p>6:00 PM - 8:00 PM</p>
+                </div>
+                <div class="service-card">
+                    <h3>Workers' Meeting</h3>
+                    <p>First Saturday Monthly</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery">
+        <div class="container">
+            <h2 class="section-title">Gallery</h2>
+            <div class="gallery-grid">
+                <img src="https://images.pexels.com/photos/33494797/pexels-photo-33494797/free-photo-of-interior-of-a-church-during-worship-service.jpeg" alt="Worship Service">
+                <img src="https://www.newhollandwood.com/wp-content/uploads/2019/10/1-Monastery-of-the-Holy-Cross-Chicago.jpg" alt="Church Interior">
+                <img src="https://assets.lifeway.com/image/upload/f_auto/q_auto/d_noimage.jpg/c_limit,w_3840/v1/iStock_000032293688Medium?_a=BAVAZGDW0" alt="Bible Study">
+                <img src="https://memorialbaptistchurch.org/mt-content/uploads/2024/03/_abt9579.jpg" alt="Praise and Worship">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <form class="contact-form" id="contactForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+            <p style="text-align:center; margin-top:2rem;">Location: Jikwoyi Phase 2, Abuja | Phone: [Insert Phone] | Email: info@christtheanchor.rccg.org</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 RCCG Christ the Anchor Parish, FCT Province 17. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.textContent = navLinks.classList.contains('active') ? '✖' : '☰';
+        });
+
+        // Simple Form Submission Alert
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you! Your message has been sent.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCCG Christ the Anchor Parish | FCT Province 17</title>
+    <style>
+        /* Reset and Basic Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1920x800?text=Church+Banner') no-repeat center center/cover;
+            color: #fff;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.2rem;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #004080; /* Deep blue, common in RCCG branding */
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        nav a {
+            color: #fff;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            transition: background 0.3s;
+        }
+        nav a:hover {
+            background-color: #ff6600; /* Orange accent */
+            border-radius: 5px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://via.placeholder.com/1920x600?text=Worship+With+Us') no-repeat center center/cover;
+            padding: 6rem 0;
+            text-align: center;
+            color: #fff;
+        }
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            background-color: #ff6600;
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background-color: #e65c00;
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 0;
+        }
+        section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            color: #004080;
+        }
+        .about, .services, .contact {
+            background-color: #fff;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background: #f1f1f1;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin-bottom: 1rem;
+            color: #004080;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #004080;
+            color: #fff;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        footer .social {
+            margin: 1rem 0;
+        }
+        footer .social a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+        footer .social a:hover {
+            color: #ff6600;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: #fff;
+            padding: 1rem;
+        }
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                display: none;
+            }
+            nav ul.active {
+                display: flex;
+            }
+            .mobile-menu {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>RCCG Christ the Anchor Parish</h1>
+            <p>FCT Province 17 | The Home of Achievers</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="mobile-menu" id="mobileMenu">☰</div>
+            <ul id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Welcome to Christ the Anchor Parish</h2>
+            <p>A place where faith is anchored in Jesus Christ. Join us for inspiring worship and fellowship.</p>
+            <a href="#services" class="btn">View Service Times</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p style="text-align:center; max-width:800px; margin:0 auto 2rem;">RCCG Christ the Anchor Parish is a vibrant community under FCT Province 17, located in Jikwoyi, Abuja. We are committed to holiness, soul-winning, and making heaven while taking as many as possible with us.</p>
+            <div class="grid">
+                <div class="card">
+                    <h3>Our Vision</h3>
+                    <p>To have a member of RCCG in every family of all nations.</p>
+                </div>
+                <div class="card">
+                    <h3>Our Mission</h3>
+                    <p>To make heaven and spread the gospel of Jesus Christ.</p>
+                </div>
+                <div class="card">
+                    <h3>Pastor</h3>
+                    <p>[Pastor's Name] - Leading with faith and compassion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Service Times</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Sunday Worship</h3>
+                    <p>8:00 AM - 11:00 AM</p>
+                </div>
+                <div class="card">
+                    <h3>Digging Deep (Wednesday)</h3>
+                    <p>6:00 PM - 8:00 PM</p>
+                </div>
+                <div class="card">
+                    <h3>Faith Clinic (Thursday)</h3>
+                    <p>6:00 PM - 8:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events">
+        <div class="container">
+            <h2>Upcoming Events</h2>
+            <p style="text-align:center;">Stay tuned for Holy Ghost Services, Workers' Training, and Special Programs.</p>
+            <!-- Add event cards here -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p style="text-align:center;">Jikwoyi Bus Stop, Phase 2, Abuja, Nigeria<br>Email: rccgchristtheanchor@gmail.com<br>Phone: [Add Phone Number]</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 RCCG Christ the Anchor Parish, FCT Province 17. All Rights Reserved.</p>
+            <div class="social">
+                <a href="https://www.facebook.com/rccgctap/" target="_blank">Facebook</a>
+                <!-- Add more social links as available -->
+            </div>
+            <p>Powered by the Redeemed Christian Church of God</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenu.textContent = navMenu.classList.contains('active') ? '✖' : '☰';
+        });
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

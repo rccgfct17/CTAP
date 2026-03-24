@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCCG Christ the Anchor Parish - FCT Province 17</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a4d2e;
+            --secondary: #ff9f29;
+            --accent: #4f8a8b;
+            --light: #f5efe6;
+            --dark: #2c3e50;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            color: var(--white);
+        }
+
+        .logo-text span {
+            font-size: 0.9rem;
+            color: var(--light);
+            font-weight: 300;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 2rem;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 77, 46, 0.8), rgba(26, 77, 46, 0.9)), url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: var(--light);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid var(--secondary);
+        }
+
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--secondary);
+        }
+
+        /* Section Common Styles */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .about-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        /* Services Section */
+        .services {
+            background-color: var(--white);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Events Section */
+        .events-slider {
+            position: relative;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+
+        .events-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            margin-bottom: 2rem;
+        }
+
+        .event-card {
+            min-width: 100%;
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .event-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .event-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .event-date {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s;
+        }
+
+        .slider-btn:hover {
+            background-color: var(--accent);
+        }
+
+        .prev-btn {
+            left: 0;
+        }
+
+        .next-btn {
+            right: 0;
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: var(--white);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-icon {
+            color: var(--secondary);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact-form button {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo .logo-icon {
+            font-size: 2rem;
+        }
+
+        .footer-links h3,
+        .footer-contact h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                padding: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s;
+                box-shadow: var(--shadow);
+            }
+
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav li {
+                margin: 0 0 1rem 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cross"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>RCCG Christ the Anchor Parish</h1>
+                    <span>FCT Province 17</span>
+                </div>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Welcome to RCCG Christ the Anchor Parish</h2>
+            <p>A place of divine encounter, spiritual growth, and community transformation. Join us as we worship God and spread the gospel of Jesus Christ in Abuja and beyond.</p>
+            <a href="#services" class="cta-button">Join Our Services</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Our Parish</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1544717305-99670f9c28f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Church congregation">
+                </div>
+                <div class="about-text">
+                    <h3>Our Mission & Vision</h3>
+                    <p>RCCG Christ the Anchor Parish is part of the Redeemed Christian Church of God, FCT Province 17. We are committed to making heaven, taking as many people with us as possible, and having a member of RCCG in every family of all nations.</p>
+                    <p>Our vision is to be a multi-ethnic, multi-generational church that is committed to evangelism, discipleship, and raising leaders who will transform their communities for Christ.</p>
+                    <p>We believe in the power of prayer, the authority of Scripture, and the transformative work of the Holy Spirit. Our church is a place where everyone is welcome, regardless of background or circumstance.</p>
+                    <a href="#contact" class="cta-button">Visit Us Today</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services & Programs</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-church"></i>
+                    </div>
+                    <h3>Sunday Service</h3>
+                    <p>Join us every Sunday for uplifting worship, inspiring messages, and fellowship with other believers.</p>
+                    <p><strong>Time:</strong> 7:00 AM - 10:00 AM</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-pray"></i>
+                    </div>
+                    <h3>Tuesday Bible Study</h3>
+                    <p>Deep dive into God's word with our midweek Bible study and prayer session.</p>
+                    <p><strong>Time:</strong> 5:30 PM - 7:00 PM</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hands-praying"></i>
+                    </div>
+                    <h3>Friday Victory Service</h3>
+                    <p>A powerful service dedicated to prayer, testimonies, and breakthrough moments.</p>
+                    <p><strong>Time:</strong> 5:30 PM - 7:30 PM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events">
+        <div class="container">
+            <div class="section-title">
+                <h2>Upcoming Events</h2>
+            </div>
+            <div class="events-slider">
+                <div class="events-container" id="eventsContainer">
+                    <!-- Event cards will be populated by JavaScript -->
+                </div>
+                <button class="slider-btn prev-btn" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="slider-btn next-btn" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <p>We'd love to hear from you. Visit us during our service times or reach out using the contact information below.</p>
+                    
+                    <h3><i class="fas fa-map-marker-alt contact-icon"></i> Location</h3>
+                    <p>Christ the Anchor Parish, RCCG FCT Province 17<br>Abuja, Federal Capital Territory, Nigeria</p>
+                    
+                    <h3><i class="fas fa-phone contact-icon"></i> Phone</h3>
+                    <p>+234 801 234 5678</p>
+                    
+                    <h3><i class="fas fa-envelope contact-icon"></i> Email</h3>
+                    <p>info@rccgchristtheanchor.org</p>
+                    
+                    <h3><i class="fas fa-clock contact-icon"></i> Service Times</h3>
+                    <p>Sunday: 7:00 AM - 10:00 AM<br>
+                    Tuesday: 5:30 PM - 7:00 PM<br>
+                    Friday: 5:30 PM - 7:30 PM</p>
+                </div>
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form id="contactForm">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <input type="text" placeholder="Subject" required>
+                        <textarea rows="5" placeholder="Your Message" required></textarea>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-cross"></i>
+                    </div>
+                    <h3>RCCG Christ the Anchor Parish</h3>
+                    <p>FCT Province 17<br>Abuja, Nigeria</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt contact-icon"></i> Abuja, FCT, Nigeria</p>
+                    <p><i class="fas fa-phone contact-icon"></i> +234 801 234 5678</p>
+                    <p><i class="fas fa-envelope contact-icon"></i> info@rccgchristtheanchor.org</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 RCCG Christ the Anchor Parish, FCT Province 17. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Events slider functionality
+        const eventsContainer = document.getElementById('eventsContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        // Sample events data
+        const events = [
+            {
+                title: "Annual Thanksgiving Service",
+                date: "December 3, 2023",
+                description: "Join us for our special annual thanksgiving service as we celebrate God's faithfulness throughout the year.",
+                image: "https://images.unsplash.com/photo-1566458257149-6cec6bc7d7a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+            },
+            {
+                title: "Youth Convention",
+                date: "December 8-10, 2023",
+                description: "A 3-day convention for young people featuring worship, teaching, and fellowship activities.",
+                image: "https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+            },
+            {
+                title: "Christmas Carol Service",
+                date: "December 24, 2023",
+                description: "Celebrate the birth of our Savior with special music, drama, and Christmas messages.",
+                image: "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+            },
+            {
+                title: "New Year Cross-over Service",
+                date: "December 31, 2023",
+                description: "Pray your way into the new year with our special cross-over night service and prayer session.",
+                image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+            }
+        ];
+
+        // Populate events
+        events.forEach(event => {
+            const eventCard = document.createElement('div');
+            eventCard.className = 'event-card';
+            eventCard.innerHTML = `
+                <div class="event-img">
+                    <img src="${event.image}" alt="${event.title}">
+                </div>
+                <div class="event-info">
+                    <span class="event-date">${event.date}</span>
+                    <h3>${event.title}</h3>
+                    <p>${event.description}</p>
+                </div>
+            `;
+            eventsContainer.appendChild(eventCard);
+        });
+
+        // Slider functionality
+        let currentSlide = 0;
+        const totalSlides = events.length;
+
+        function updateSlider() {
+            const slideWidth = 100 / totalSlides;
+            eventsContainer.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide > 0) ? currentSlide - 1 : totalSlides - 1;
+            updateSlider();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
+            updateSlider();
+        });
+
+        // Auto slide every 5 seconds
+        setInterval(() => {
+            currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
+            updateSlider();
+        }, 5000);
+
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = contactForm.querySelector('input[type="text"]').value;
+            const email = contactForm.querySelector('input[type="email"]').value;
+            
+            // In a real application, you would send this data to a server
+            // For now, we'll just show an alert
+            alert(`Thank you ${name}! Your message has been received. We will contact you at ${email} soon.`);
+            
+            // Reset form
+            contactForm.reset();
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RCCG Christ The Anchor Parish | FCT Province 17</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0a2a66;
+      --secondary: #f2c94c;
+      --light: #f8f9fc;
+      --dark: #1f2933;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(rgba(10,42,102,0.85), rgba(10,42,102,0.85)),
+                  url('https://images.unsplash.com/photo-1529070538774-1843cb3265df') center/cover no-repeat;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(0,0,0,0.2);
+    }
+
+    nav h1 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--secondary);
+    }
+
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      background: var(--secondary);
+      color: #000;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    section {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    section h3 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: var(--primary);
+    }
+
+    .about, .services, .events {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .card h4 {
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    footer {
+      background: var(--primary);
+      color: #fff;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 0.5rem 0;
+    }
+
+    /* Mobile menu */
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: var(--primary);
+        flex-direction: column;
+        width: 200px;
+        padding: 1rem;
+        display: none;
+      }
+
+      nav ul.show {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+        color: #fff;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <h1>RCCG Christ The Anchor Parish</h1>
+      <div class="menu-toggle" id="menuToggle">☰</div>
+      <ul id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero">
+      <h2>Welcome to Christ The Anchor Parish</h2>
+      <p>A place of worship, hope, and spiritual growth under RCCG FCT Province 17.</p>
+      <a href="#services" class="btn">Join Us This Sunday</a>
+    </div>
+  </header>
+
+  <section id="about">
+    <h3>About Us</h3>
+    <div class="about">
+      <div class="card">
+        <h4>Our Mission</h4>
+        <p>To make heaven, take as many people as possible with us, and impact our community through Christ.</p>
+      </div>
+      <div class="card">
+        <h4>Our Vision</h4>
+        <p>Raising believers who are firmly anchored in Christ and effective in every sphere of life.</p>
+      </div>
+      <div class="card">
+        <h4>Our Values</h4>
+        <p>Faith, Love, Excellence, Service, and Integrity.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <h3>Service Times</h3>
+    <div class="services">
+      <div class="card">
+        <h4>Sunday Service</h4>
+        <p>8:00 AM – 10:30 AM</p>
+      </div>
+      <div class="card">
+        <h4>Midweek Service</h4>
+        <p>Wednesday – 6:00 PM</p>
+      </div>
+      <div class="card">
+        <h4>Prayer Meeting</h4>
+        <p>Friday – 6:00 PM</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="events">
+    <h3>Upcoming Events</h3>
+    <div class="events">
+      <div class="card">
+        <h4>Holy Ghost Service</h4>
+        <p>Monthly program of worship, praise, and miracles.</p>
+      </div>
+      <div class="card">
+        <h4>Workers' Training</h4>
+        <p>Equipping workers for effective service in God's kingdom.</p>
+      </div>
+      <div class="card">
+        <h4>Community Outreach</h4>
+        <p>Reaching out with love and support to our local community.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h3>Contact Us</h3>
+    <div class="about">
+      <div class="card">
+        <h4>Location</h4>
+        <p>FCT Abuja, Nigeria<br>RCCG FCT Province 17</p>
+      </div>
+      <div class="card">
+        <h4>Phone</h4>
+        <p>+234 XXX XXX XXXX</p>
+      </div>
+      <div class="card">
+        <h4>Email</h4>
+        <p>info@christtheanchorparish.org</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; <span id="year"></span> RCCG Christ The Anchor Parish</p>
+    <p>FCT Province 17</p>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCCG Christ the Anchor Parish - FCT Province 17</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #006400; /* Dark green - RCCG color */
+            --secondary: #FFD700; /* Gold accent */
+            --accent: #8B0000; /* Dark red accent */
+            --light: #f8f9fa;
+            --dark: #333333;
+            --gray: #6c757d;
+            --light-green: #e9f7ef;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        .text-center h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--primary);
+            color: var(--white);
+            border-radius: 4px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            margin-right: 10px;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            color: var(--dark);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a.active {
+            color: var(--primary);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1518834103328-93d45986dce1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            text-align: center;
+            padding: 180px 0 100px;
+            margin-top: 90px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--white);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        /* About Section */
+        .about {
+            background-color: var(--light);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Services Section */
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.05);
+        }
+
+        .service-info {
+            padding: 25px;
+        }
+
+        .service-info h3 {
+            margin-bottom: 10px;
+        }
+
+        .service-time {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .service-time i {
+            margin-right: 8px;
+        }
+
+        /* Ministries Section */
+        .ministries {
+            background-color: var(--light-green);
+        }
+
+        .ministry-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .ministry-card {
+            background-color: var(--white);
+            padding: 30px 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .ministry-card:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .ministry-card:hover h3,
+        .ministry-card:hover .ministry-icon {
+            color: var(--white);
+        }
+
+        .ministry-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        /* Events Section */
+        .event-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .event-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            display: flex;
+        }
+
+        .event-date {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 20px;
+            text-align: center;
+            min-width: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .event-day {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .event-month {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .event-details {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .event-details h3 {
+            margin-bottom: 10px;
+        }
+
+        .event-time {
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .event-time i {
+            margin-right: 8px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: var(--light);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 20px;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            background-color: var(--primary);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo img {
+            height: 70px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links h3,
+        .footer-contact h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-text, .about-image {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 90px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 90px);
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                transition: var(--transition);
+                z-index: 999;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 30px;
+            }
+
+            nav ul li {
+                margin: 0 0 20px 0;
+            }
+
+            .hero {
+                padding: 150px 0 80px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-padding {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+            }
+
+            .event-card {
+                flex-direction: column;
+            }
+
+            .event-date {
+                flex-direction: row;
+                justify-content: center;
+                gap: 10px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-img">
+                    <i class="fas fa-anchor" style="font-size: 2.5rem; color: var(--primary);"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>RCCG Christ the Anchor Parish</h1>
+                    <p>FCT Province 17, Abuja, Nigeria</p>
+                </div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#ministries">Ministries</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Welcome to Christ the Anchor Parish</h1>
+            <p>A place of worship, fellowship, and spiritual growth in the heart of Abuja. We are a parish of the Redeemed Christian Church of God (RCCG), FCT Province 17, committed to raising disciples for Christ.</p>
+            <a href="#about" class="btn">Learn More</a>
+            <a href="#services" class="btn btn-secondary">Join Our Services</a>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about section-padding" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Our Parish</h2>
+                <p>Get to know Christ the Anchor Parish</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Vision & Mission</h3>
+                    <p>Christ the Anchor Parish is a vibrant community of believers committed to making heaven and taking as many people with us as possible. We are dedicated to raising disciples for Christ through the teaching of God's Word, fellowship, and evangelism.</p>
+                    <p>As part of the Redeemed Christian Church of God (RCCG) worldwide, we uphold the vision of our General Overseer, Pastor E.A. Adeboye, to spread the gospel to all nations.</p>
+                    <p>Our parish in FCT Province 17 serves the Abuja community with various programs and ministries designed to meet spiritual needs at every stage of life.</p>
+                    <a href="#contact" class="btn">Visit Us</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Church congregation">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services section-padding" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>Join us for worship and fellowship</p>
+            </div>
+            
+            <div class="service-cards">
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1936&q=80" alt="Sunday Service">
+                    </div>
+                    <div class="service-info">
+                        <h3>Sunday Worship Service</h3>
+                        <div class="service-time">
+                            <i class="far fa-clock"></i> 7:30 AM - 10:30 AM
+                        </div>
+                        <p>Our main weekly service featuring uplifting worship, prayer, and an impactful message from God's Word. Holy Communion is served on the first Sunday of each month.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1563642421743-1e37d2f82b6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Bible Study">
+                    </div>
+                    <div class="service-info">
+                        <h3>Tuesday Bible Study</h3>
+                        <div class="service-time">
+                            <i class="far fa-clock"></i> 5:30 PM - 7:00 PM
+                        </div>
+                        <p>An in-depth study of God's Word to help believers grow in knowledge and understanding of Scripture. This midweek service strengthens faith and provides practical biblical teaching.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Prayer Meeting">
+                    </div>
+                    <div class="service-info">
+                        <h3>Friday Prayer Meeting</h3>
+                        <div class="service-time">
+                            <i class="far fa-clock"></i> 6:00 PM - 8:00 PM
+                        </div>
+                        <p>A powerful time of intercession and prayer for personal needs, the church, our nation, and global concerns. Experience the transforming power of prayer in this weekly gathering.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ministries Section -->
+    <section class="ministries section-padding" id="ministries">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Ministries</h2>
+                <p>Get involved in our various ministries</p>
+            </div>
+            
+            <div class="ministry-cards">
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3>Praise & Worship</h3>
+                    <p>Our talented choir and instrumentalists lead the congregation in uplifting worship during services.</p>
+                </div>
+                
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Ushering & Protocol</h3>
+                    <p>Creating a welcoming atmosphere and ensuring orderly conduct during church services and events.</p>
+                </div>
+                
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <h3>Children's Ministry</h3>
+                    <p>Teaching children about Jesus in fun, age-appropriate ways during Sunday services.</p>
+                </div>
+                
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Youth Ministry</h3>
+                    <p>Engaging young people through relevant teachings, fellowship, and community outreach.</p>
+                </div>
+                
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-pray"></i>
+                    </div>
+                    <h3>Prayer Ministry</h3>
+                    <p>Interceding for the church, members, and global concerns through organized prayer sessions.</p>
+                </div>
+                
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Outreach & Evangelism</h3>
+                    <p>Spreading the gospel in our community through various evangelistic programs and outreach initiatives.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events section-padding" id="events">
+        <div class="container">
+            <div class="section-title">
+                <h2>Upcoming Events</h2>
+                <p>Join us for these special gatherings</p>
+            </div>
+            
+            <div class="event-list">
+                <div class="event-card">
+                    <div class="event-date">
+                        <div class="event-day">15</div>
+                        <div class="event-month">July</div>
+                    </div>
+                    <div class="event-details">
+                        <h3>Annual Church Picnic</h3>
+                        <div class="event-time">
+                            <i class="far fa-clock"></i> 10:00 AM - 4:00 PM
+                        </div>
+                        <p>A day of fun, food, and fellowship for the entire church family at Millennium Park.</p>
+                    </div>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-date">
+                        <div class="event-day">22</div>
+                        <div class="event-month">July</div>
+                    </div>
+                    <div class="event-details">
+                        <h3>Youth Empowerment Conference</h3>
+                        <div class="event-time">
+                            <i class="far fa-clock"></i> 9:00 AM - 5:00 PM
+                        </div>
+                        <p>A one-day conference focusing on career, faith, and personal development for young adults.</p>
+                    </div>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-date">
+                        <div class="event-day">05</div>
+                        <div class="event-month">August</div>
+                    </div>
+                    <div class="event-details">
+                        <h3>Special Healing Service</h3>
+                        <div class="event-time">
+                            <i class="far fa-clock"></i> 5:00 PM - 8:00 PM
+                        </div>
+                        <p>A night of worship, prayer, and ministry for healing and deliverance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact section-padding" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>We'd love to hear from you</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Our Location</h4>
+                            <p>Plot 245, Christ the Anchor Way, <br>Garki District, Abuja, Nigeria</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4>Phone Number</h4>
+                            <p>+234 803 123 4567<br>+234 809 876 5432</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">
+                            <i class="far fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email Address</h4>
+                            <p>info@christtheanchorrccg.org<br>prayer@christtheanchorrccg.org</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">
+                            <i class="far fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4>Service Times</h4>
+                            <p>Sunday: 7:30 AM - 10:30 AM<br>
+                            Tuesday: 5:30 PM - 7:00 PM<br>
+                            Friday: 6:00 PM - 8:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form id="messageForm">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <input type="text" placeholder="Subject" required>
+                        <textarea placeholder="Your Message" required></textarea>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">
+                        <i class="fas fa-anchor" style="font-size: 2.5rem; color: var(--secondary);"></i>
+                    </div>
+                    <h3>RCCG Christ the Anchor Parish</h3>
+                    <p>FCT Province 17, Abuja, Nigeria</p>
+                    <p>"A place where Christ is the anchor for every soul."</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#ministries">Ministries</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Connect With Us</h3>
+                    <p>Follow us on social media for updates, inspirational content, and event announcements.</p>
+                    
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 RCCG Christ the Anchor Parish, FCT Province 17. All Rights Reserved.</p>
+                <p>Redeemed Christian Church of God Worldwide</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 90,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Form submission
+        const messageForm = document.getElementById('messageForm');
+        messageForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = this.querySelector('input[type="text"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            
+            // In a real application, you would send this data to a server
+            // For this demo, we'll just show an alert
+            alert(`Thank you, ${name}! Your message has been received. We will contact you at ${email} soon.`);
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // Update active nav link based on scroll position
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if(scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Add current year to footer
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSpan = document.querySelector('.copyright p');
+            const currentYear = new Date().getFullYear();
+            yearSpan.innerHTML = yearSpan.innerHTML.replace('2023', currentYear);
+        });
+    </script>
+</body>
+</html>
