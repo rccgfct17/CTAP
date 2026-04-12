@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact RCCG Christ the Anchor Parish. Reach out with questions, prayer requests, or for more information about our ministry.">
+    <title>Contact | RCCG Christ the Anchor Parish</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- HEADER & NAVIGATION -->
+    <header>
+        <div class="container header-flex">
+            <div class="logo">
+                <i class="fas fa-cross"></i>
+                <div class="logo-text">
+                    <h1>RCCG Christ the Anchor</h1>
+                    <p>FCT Province 17 | Abuja, Nigeria</p>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="ministries.html">Ministries</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="giving.html">Giving</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Get in Touch</h1>
+            <p>We'd love to hear from you. Reach out with any questions or prayer requests</p>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Address</h3>
+                            <p>Jikwoyi Phase 2, FCT Abuja, Nigeria</p>
+                            <p>RCCG FCT Province 17</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Phone</h3>
+                            <p>+234 (0) XXX XXX XXXX</p>
+                            <p>Available during office hours</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Email</h3>
+                            <p>info@christtheanchorparish.org</p>
+                            <p>We reply within 24 hours</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Follow Us Online</h3>
+                            <div class="social-links">
+                                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="contactForm" class="contact-form" novalidate>
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">-- Select Subject --</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="ministry">Ministry Information</option>
+                            <option value="prayer">Prayer Request</option>
+                            <option value="feedback">Feedback/Suggestion</option>
+                            <option value="visit">Plan a Visit</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <div id="formStatus" class="form-status"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- OFFICE HOURS SECTION -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Office Hours</h2>
+            <div class="office-hours">
+                <div class="hours-card">
+                    <h3>Monday - Friday</h3>
+                    <p>9:00 AM - 5:00 PM</p>
+                </div>
+                <div class="hours-card">
+                    <h3>Saturday</h3>
+                    <p>9:00 AM - 1:00 PM</p>
+                </div>
+                <div class="hours-card">
+                    <h3>Sunday</h3>
+                    <p>After Service</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRAYER REQUEST SECTION -->
+    <section class="section section-light">
+        <div class="container cta-text">
+            <h2>Prayer Requests</h2>
+            <p>Need prayer? Submit your prayer request through our contact form and our prayer team will intercede for you</p>
+            <p style="font-style: italic; margin-top: 1rem;">We believe in the power of prayer and stand with you in faith</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>RCCG Christ the Anchor Parish is a community of believers anchored in Christ, dedicated to worship, fellowship, and service.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Service Times</h3>
+                    <ul class="service-times">
+                        <li>Sunday: 8:00 AM - 10:30 AM</li>
+                        <li>Tuesday: 6:00 PM</li>
+                        <li>Thursday: 6:00 PM</li>
+                        <li>Saturday: 8:00 AM</li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Jikwoyi Phase 2, Abuja</p>
+                    <p><i class="fas fa-phone"></i> +234 XXX XXX XXXX</p>
+                    <p><i class="fas fa-envelope"></i> info@christtheanchorparish.org</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 RCCG Christ the Anchor Parish. All rights reserved.</p>
+                <p>FCT Province 17 | Abuja, Nigeria | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP BUTTON -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
