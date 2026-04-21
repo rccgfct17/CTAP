@@ -17,6 +17,8 @@ const eventsCarousel = document.getElementById('eventsCarousel');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 
+const formInputs = contactForm ? contactForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]') : [];
+
 // ========================================
 // 2. VARIABLES
 // ========================================
@@ -30,14 +32,20 @@ const eventSlides = document.querySelectorAll('.event-slide');
 // 3. MOBILE MENU TOGGLE
 // ========================================
 
-mobileMenuBtn.addEventListener('click', function() {
-    navMenu.classList.toggle('show');
-});
+if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function() {
+        if (navMenu) {
+            navMenu.classList.toggle('show');
+        }
+    });
+}
 
 // Close menu when a link is clicked
 navLinks.forEach(link => {
     link.addEventListener('click', function(e) {
-        navMenu.classList.remove('show');
+        if (navMenu) {
+            navMenu.classList.remove('show');
+        }
         
         // Update active link
         navLinks.forEach(l => l.classList.remove('active'));
@@ -48,7 +56,9 @@ navLinks.forEach(link => {
 // Close menu when clicking outside
 document.addEventListener('click', function(e) {
     if (!e.target.closest('nav') && !e.target.closest('.mobile-menu-btn')) {
-        navMenu.classList.remove('show');
+        if (navMenu) {
+            navMenu.classList.remove('show');
+        }
     }
 });
 
@@ -57,7 +67,11 @@ document.addEventListener('click', function(e) {
 // ========================================
 
 function showSlide(n) {
-    slides.forEach(slide => slide.classList.remove('fade'));
+    if (!slides.length) return;
+
+    slides.forEach(slide => {
+        slide.classList.remove('active', 'fade');
+    });
     
     if (n >= slides.length) {
         currentSlide = 0;
@@ -65,7 +79,7 @@ function showSlide(n) {
         currentSlide = slides.length - 1;
     }
     
-    slides[currentSlide].classList.add('fade');
+    slides[currentSlide].classList.add('active', 'fade');
 }
 
 function nextSlide() {
@@ -86,6 +100,7 @@ if (slides.length) {
 // ========================================
 
 function showEventSlide(n) {
+    if (!eventsCarousel || !eventSlides.length) return;
     const totalSlides = eventSlides.length;
     const offset = -n * 100;
     eventsCarousel.style.transform = `translateX(${offset}%)`;
@@ -282,7 +297,6 @@ if (contactForm) {
         }
     });
 
-    const formInputs = contactForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]');
     formInputs.forEach(input => {
         input.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
@@ -330,10 +344,12 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('keydown', function(e) {
     // Escape key closes mobile menu
     if (e.key === 'Escape') {
-        navMenu.classList.remove('show');
+        if (navMenu) {
+            navMenu.classList.remove('show');
+        }
     }
     
-    // Tab key for back to top
+    // Ctrl+ArrowUp for back to top
     if (e.key === 'ArrowUp' && e.ctrlKey) {
         window.scrollTo({
             top: 0,
@@ -346,13 +362,11 @@ document.addEventListener('keydown', function(e) {
 // 13. PREVENT FORM SUBMISSION ENTER KEY
 // ========================================
 
-const formInputs = contactForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]');
-
 formInputs.forEach(input => {
     input.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             e.preventDefault();
-            const nextInput = findNextInput(this);
+            const nextInput = findNextInput(this, formInputs);
             if (nextInput) {
                 nextInput.focus();
             }
