@@ -12,11 +12,11 @@ const navMenu = document.getElementById('navMenu');
 const navLinks = document.querySelectorAll('nav a');
 const backToTopBtn = document.getElementById('backToTop');
 const contactForm = document.getElementById('contactForm');
-const slideshowContainer = document.getElementById('slideshowContainer');
 const eventsCarousel = document.getElementById('eventsCarousel');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 
+const slides = document.querySelectorAll('.slide');
 const formInputs = contactForm ? contactForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]') : [];
 
 // ========================================
@@ -25,7 +25,6 @@ const formInputs = contactForm ? contactForm.querySelectorAll('input[type="text"
 
 let currentSlide = 0;
 let currentEventSlide = 0;
-const slides = document.querySelectorAll('.slide');
 const eventSlides = document.querySelectorAll('.event-slide');
 
 // ========================================
@@ -35,7 +34,8 @@ const eventSlides = document.querySelectorAll('.event-slide');
 if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', function() {
         if (navMenu) {
-            navMenu.classList.toggle('show');
+            const isOpen = navMenu.classList.toggle('show');
+            mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         }
     });
 }
@@ -46,10 +46,13 @@ navLinks.forEach(link => {
         if (navMenu) {
             navMenu.classList.remove('show');
         }
+        if (mobileMenuBtn) {
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        }
         
         // Update active link
         navLinks.forEach(l => l.classList.remove('active'));
-        e.target.classList.add('active');
+        this.classList.add('active');
     });
 });
 
@@ -164,32 +167,7 @@ navLinks.forEach(link => {
 // 7. ACTIVE NAV LINK ON SCROLL
 // ========================================
 
-window.addEventListener('scroll', function() {
-    let current = '';
-    const sections = document.querySelectorAll('section');
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (scrollY >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').includes(current)) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// ========================================
-// 8. BACK TO TOP BUTTON
-// ========================================
-
-window.addEventListener('scroll', function() {
+function toggleBackToTop() {
     if (!backToTopBtn) return;
 
     if (window.scrollY > 300) {
@@ -197,7 +175,17 @@ window.addEventListener('scroll', function() {
     } else {
         backToTopBtn.classList.remove('show');
     }
-});
+}
+
+window.addEventListener('scroll', debounce(function() {
+    updateActiveNavLink();
+    toggleBackToTop();
+}, 80));
+
+// ========================================
+// 8. BACK TO TOP BUTTON
+// ========================================
+
 
 if (backToTopBtn) {
     backToTopBtn.addEventListener('click', function() {
@@ -483,14 +471,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function updateActiveNavLink() {
-    const sections = document.querySelectorAll('section');
-    let current = sections[0].getAttribute('id');
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').includes(current)) {
-            link.classList.add('active');
+    const sections = document.querySelectorAll('section[id], footer[id]');
+    if (!sections.length) return;
+
+    const scrollPosition = window.scrollY + 220;
+    let current = sections[0].id;
+
+    sections.forEach(section => {
+        if (scrollPosition >= section.offsetTop) {
+            current = section.id;
         }
+    });
+
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        link.classList.toggle('active', href === `#${current}`);
     });
 }
 
