@@ -4,318 +4,213 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="RCCG Christ the Anchor Parish - FCT Province 17. The Official Website. A place of worship, fellowship, spiritual growth, and community outreach in Abuja, Nigeria.">
-    <title>RCCG Christ the Anchor Parish | Single Page</title>
+    <meta name="theme-color" content="#191b76">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>RCCG Christ the Anchor Parish | Home</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="canonical" href="https://christtheanchorparish.org/">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/favicon.ico">
 </head>
 <body>
+    <!-- SKIP TO MAIN CONTENT -->
+    <a href="#main-content" class="sr-only">Skip to main content</a>
+
     <!-- HEADER -->
     <header id="main-header">
         <div class="container header-flex">
-            <a href="#hero" class="logo brandmark">
-                <img src="images/LOGO.png" alt="RCCG Logo" class="brand-logo">
+            <a href="index.html" class="logo">
+                <img src="images/LOGO.png" alt="RCCG Christ the Anchor Parish Logo" class="brand-logo" loading="lazy">
                 <div class="logo-text">
                     <h1>RCCG Christ the Anchor</h1>
                     <p>FCT Province 17, Abuja</p>
                 </div>
             </a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
-                <i class="fas fa-bars"></i>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle main navigation" aria-controls="navMenu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
             </button>
-            <nav>
+            <nav aria-label="Primary navigation">
                 <ul id="navMenu">
-                    <li><a href="#hero" class="active">Home</a></li>
-                    <li><a href="#about">Who We Are</a></li>
-                    <li><a href="#leadership">Leadership</a></li>
-                    <li><a href="#media">Media</a></li>
-                    <li><a href="#giving">Giving</a></li>
-                    <li><a href="#salvation">Salvation</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html" aria-current="page">Home</a></li>
+                    <li><a href="about.html">Who We Are</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="events.html">Events & Media</a></li>
+                    <li><a href="giving.html">Giving</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero" id="hero">
-        <div class="slideshow-container" id="heroSlideshow">
-            <div class="slide active">
-                <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Worship Team">
+    <main id="main-content">
+        <!-- HERO SECTION -->
+        <section class="hero" id="hero" aria-labelledby="hero-heading">
+            <div class="slideshow-container" id="heroSlideshow">
+                <div class="slide active">
+                    <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Worship team leading praise and worship" loading="lazy">
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Parish congregation in worship" loading="lazy">
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Bible study group" loading="lazy">
+                </div>
             </div>
-            <div class="slide">
-                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Congregation Worship">
+            <div class="hero-overlay">
+                <div class="container">
+                    <div class="hero-content">
+                        <span class="hero-tag">Welcome to the family</span>
+                        <h2 id="hero-heading">Anchored in Christ. Growing in Grace.</h2>
+                        <p>Experience the love of God, rich fellowship, and life-transforming Word at RCCG Christ the Anchor Parish.</p>
+                        <div class="hero-actions">
+                            <a href="#about" class="btn btn--primary">Discover More</a>
+                            <a href="#salvation" class="btn btn--outline">New Here?</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="slide">
-                <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Bible Study">
-            </div>
-        </div>
-        <div class="hero-overlay">
+        </section>
+
+        <!-- WHAT WE DO / MINISTRIES -->
+        <section class="section section--light" id="about" aria-labelledby="about-heading">
             <div class="container">
-                <div class="hero-content">
-                    <span class="hero-tag">Welcome to the family</span>
-                    <h2>Anchored in Christ. Growing in Grace.</h2>
-                    <p>Experience the love of God, rich fellowship, and life-transforming Word at RCCG Christ the Anchor Parish.</p>
-                    <div class="hero-actions">
-                        <a href="#about" class="btn btn-primary">Discover More</a>
-                        <a href="#salvation" class="btn btn-outline">New Here?</a>
-                    </div>
+                <div class="section-header">
+                    <span class="section-tag">Explore</span>
+                    <h2 id="about-heading" class="section-title center">What We Do</h2>
+                    <p class="section-subtitle">Discover the various channels through which we serve God and our community, aligned with the RCCG global mandate.</p>
+                </div>
+                <div class="grid-4">
+                    <a href="https://www.rcbc.edu.ng/" target="_blank" rel="noopener noreferrer" class="card--premium">
+                        <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-graduation-cap"></i></div>
+                        <h3>Bible College</h3>
+                        <p>Equipping ministers and workers for the work of the ministry worldwide.</p>
+                    </a>
+                    <a href="https://run.edu.ng/" target="_blank" rel="noopener noreferrer" class="card--premium delay-100">
+                        <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-university"></i></div>
+                        <h3>Redeemer's University</h3>
+                        <p>Building future leaders with academic excellence and moral uprightness.</p>
+                    </a>
+                    <a href="https://www.rccg.org/african-missions/" target="_blank" rel="noopener noreferrer" class="card--premium delay-200">
+                        <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-globe-africa"></i></div>
+                        <h3>African Missions</h3>
+                        <p>Reaching out to the unreached across Africa with the Gospel of Christ.</p>
+                    </a>
+                    <a href="https://www.rccg.org/crm/" target="_blank" rel="noopener noreferrer" class="card--premium delay-300">
+                        <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-hands-holding-child"></i></div>
+                        <h3>CRM</h3>
+                        <p>Christ the Redeemer's Ministries: focusing on youth, children, and specialized evangelism.</p>
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- WHAT WE DO / MINISTRIES -->
-    <section class="section section-light" id="about">
-        <div class="container animate-on-scroll">
-            <div class="section-header">
-                <span class="section-tag">Explore</span>
-                <h2 class="section-title center">What We Do</h2>
-                <p class="section-subtitle">Discover the various channels through which we serve God and our community, aligned with the RCCG global mandate.</p>
-            </div>
-            
-            <div class="grid-4">
-                <a href="https://www.rcbc.edu.ng/" target="_blank" rel="noopener noreferrer" class="card-premium">
-                    <div class="icon-wrapper"><i class="fas fa-graduation-cap"></i></div>
-                    <h3>Bible College</h3>
-                    <p>Equipping ministers and workers for the work of the ministry worldwide.</p>
-                </a>
-                <a href="https://run.edu.ng/usite/" target="_blank" rel="noopener noreferrer" class="card-premium delay-100">
-                    <div class="icon-wrapper"><i class="fas fa-university"></i></div>
-                    <h3>Redeemer's University</h3>
-                    <p>Building future leaders with academic excellence and moral uprightness.</p>
-                </a>
-                <a href="https://www.rccg.org/african-missions/" target="_blank" rel="noopener noreferrer" class="card-premium delay-200">
-                    <div class="icon-wrapper"><i class="fas fa-globe-africa"></i></div>
-                    <h3>African Missions</h3>
-                    <p>Reaching out to the unreached across Africa with the Gospel of Christ.</p>
-                </a>
-                <a href="https://www.rccg.org/crm/" target="_blank" rel="noopener noreferrer" class="card-premium delay-300">
-                    <div class="icon-wrapper"><i class="fas fa-hands-holding-child"></i></div>
-                    <h3>CRM</h3>
-                    <p>Christ the Redeemer's Ministries: focusing on youth, children, and specialized evangelism.</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- LEADERSHIP SECTION -->
-    <section class="section section-gray" id="leadership">
-        <div class="container animate-on-scroll">
-            <div class="leadership-block">
-                <div class="leadership-image">
-                    <img src="https://images.unsplash.com/photo-1544257121-6a1bd2901306?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="General Overseer">
-                </div>
-                <div class="leadership-content">
-                    <span class="section-tag">Our Leadership</span>
-                    <h2 class="section-title left">Following the Vision</h2>
-                    <span class="leadership-title">Pastor E.A. Adeboye - General Overseer, RCCG Worldwide</span>
-                    <p>Under the visionary leadership of Pastor E.A. Adeboye and Pastor (Mrs) Folu Adeboye, The Redeemed Christian Church of God continues to take the Gospel of Jesus Christ to every nation of the world.</p>
-                    <p>At Christ the Anchor Parish, we run with this global mandate: to make heaven and to take as many people with us as possible.</p>
-                    <a href="https://eaadeboye.com/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="margin-top: 1rem;">Pastor E.A. Adeboye's Official Website <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></a>
-                </div>
-            </div>
-            
-            <div class="leadership-grid animate-on-scroll delay-100">
-                <div class="section-header" style="margin-bottom: 30px;">
-                    <h3 class="section-title center" style="font-size: 1.5rem;">Parish Leadership</h3>
-                </div>
-                <div class="leadership-grid grid-3">
-                    <div class="leader-card">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Parish Pastor">
-                        <h3>Pastor John Doe</h3>
-                        <p style="color: var(--primary-green); font-weight: 600;">Parish Pastor</p>
+        <!-- SALVATION CALL -->
+        <section class="section section--red" id="salvation" aria-labelledby="salvation-heading">
+            <div class="container">
+                <div class="testimonial-block">
+                    <i class="fas fa-cross quote-icon" aria-hidden="true"></i>
+                    <h2 id="salvation-heading">Do You Want To Give Your Life To Christ?</h2>
+                    <p>Jesus said, "I am the way, the truth, and the life. No one comes to the Father except through Me." (John 14:6)</p>
+                    <div class="py-md">
+                        <h3 class="mb-lg">Please Follow These Steps:</h3>
+                        <ul role="list" class="mb-lg">
+                            <li class="mb-md"><i class="fas fa-check-circle" aria-hidden="true"></i> <strong>Acknowledge</strong> all your sins (Acts 2:36 - 38)</li>
+                            <li class="mb-md"><i class="fas fa-check-circle" aria-hidden="true"></i> <strong>Confess</strong> those sins (Galatians 5:19 - 21)</li>
+                            <li class="mb-md"><i class="fas fa-check-circle" aria-hidden="true"></i> <strong>Ask</strong> for forgiveness of sin (I John 1:9)</li>
+                            <li class="mb-md"><i class="fas fa-check-circle" aria-hidden="true"></i> <strong>Repent</strong> of those sins (Act 3:19)</li>
+                        </ul>
                     </div>
+                    <a href="#contact" class="btn btn--secondary">I Have Decided To Follow Jesus</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- ONLINE GIVING HIGHLIGHTS -->
-    <section class="section section-dark" id="giving">
-        <div class="container animate-on-scroll">
-            <div class="section-header">
-                <span class="section-tag" style="color: var(--accent-gold);">Partner with us</span>
-                <h2 class="section-title center">Online Giving</h2>
-                <p class="section-subtitle">"Give, and it will be given to you. A good measure, pressed down, shaken together and running over, will be poured into your lap." - Luke 6:38</p>
-            </div>
-            
-            <div class="giving-methods-wrapper">
-                <a href="https://rccgpayments.trccg.org/holyGhost/trccg.org/offering.php" target="_blank" rel="noopener noreferrer" class="giving-method-card">
-                    <i class="fas fa-hand-holding-heart"></i>
-                    <h4>Tithe & Offering</h4>
-                    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Worship through giving</p>
-                </a>
-                <a href="https://rccgpayments.trccg.org/holyGhost/trccg.org/offering.php?firstfruit=FirstFruit" target="_blank" rel="noopener noreferrer" class="giving-method-card delay-100">
-                    <i class="fas fa-seedling"></i>
-                    <h4>First Fruit</h4>
-                    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Secret of blessing</p>
-                </a>
-                <a href="https://rccgpayments.trccg.org/nb/" target="_blank" rel="noopener noreferrer" class="giving-method-card delay-200">
-                    <i class="fas fa-hammer"></i>
-                    <h4>Nehemiah Builders</h4>
-                    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Kingdom projects</p>
-                </a>
-                <a href="https://rccgpayments.trccg.org/p75/" target="_blank" rel="noopener noreferrer" class="giving-method-card delay-300">
-                    <i class="fas fa-handshake"></i>
-                    <h4>Partner 75</h4>
-                    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Mission support</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- MEDIA & RESOURCES -->
-    <section class="section section-light" id="media">
-        <div class="container animate-on-scroll">
-            <div class="section-header">
-                <span class="section-tag">Edification</span>
-                <h2 class="section-title center">Media & Resources</h2>
-                <p class="section-subtitle">Stay connected through our various platforms for your spiritual nourishment.</p>
-            </div>
-            
-            <div class="grid-3">
-                <div class="card-visual">
-                    <div class="image-wrapper">
-                        <span class="badge">Live</span>
-                        <img src="https://images.unsplash.com/photo-1598555319808-16aa76aa2648?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Redemption TV">
-                    </div>
-                    <div class="content">
-                        <h3>Redemption TV</h3>
-                        <p>Watch RCCG Events live. Access broadcasts of all major events for your edification from anywhere in the world.</p>
-                        <a href="https://www.rccg.org/redemption-tv/" target="_blank" rel="noopener noreferrer" class="link">Watch Live <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                
-                <div class="card-visual delay-100">
-                    <div class="image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1589998059171-989d887dda19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Podcasts">
-                    </div>
-                    <div class="content">
-                        <h3>Pastor E.A. Adeboye's Podcasts</h3>
-                        <p>Listen to the latest sermons from Daddy G.O on all digital platforms and be blessed in Jesus Name.</p>
-                        <a href="https://eaadeboye.com/podcasts/" target="_blank" rel="noopener noreferrer" class="link">Listen Now <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                
-                <div class="card-visual delay-200">
-                    <div class="image-wrapper">
-                        <span class="badge" style="background: var(--primary-green); color: white;">Daily</span>
-                        <img src="https://images.unsplash.com/photo-1506869640319-ce1a44b15093?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Open Heavens">
-                    </div>
-                    <div class="content">
-                        <h3>Open Heavens Devotional</h3>
-                        <p>Start your day with the daily devotional written by Pastor E.A. Adeboye. Get your spiritual meal.</p>
-                        <a href="https://eopenheavens.com/" target="_blank" rel="noopener noreferrer" class="link">Read Today <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SALVATION CALL (CRITICAL) -->
-    <section class="section section-red" id="salvation">
-        <div class="container animate-on-scroll">
-            <div class="testimonial-block">
-                <i class="fas fa-cross quote-icon" style="color: rgba(255,255,255,0.3);"></i>
-                <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">Do You Want To Give Your Life To Christ?</h2>
-                <p style="font-size: 1.2rem; margin-bottom: 3rem; font-family: var(--font-accent); color: rgba(255,255,255,0.9);">
-                    Jesus said, "I am the way, the truth, and the life. No one comes to the Father except through Me." (John 14:6)
-                </p>
-                <div style="background: rgba(0,0,0,0.2); padding: 40px; border-radius: var(--radius-md); text-align: left; margin-bottom: 2rem; border-left: 4px solid var(--accent-gold);">
-                    <h4 style="color: var(--accent-gold); font-size: 1.3rem; margin-bottom: 1rem;">Please Follow These Steps:</h4>
-                    <ul style="list-style: none; padding-left: 0;">
-                        <li style="margin-bottom: 15px; font-size: 1.1rem;"><i class="fas fa-check-circle" style="color: var(--accent-gold); margin-right: 10px;"></i> <strong>Acknowledge</strong> all your sins (Acts 2:36 - 38)</li>
-                        <li style="margin-bottom: 15px; font-size: 1.1rem;"><i class="fas fa-check-circle" style="color: var(--accent-gold); margin-right: 10px;"></i> <strong>Confess</strong> those sins (Galatians 5:19 - 21)</li>
-                        <li style="margin-bottom: 15px; font-size: 1.1rem;"><i class="fas fa-check-circle" style="color: var(--accent-gold); margin-right: 10px;"></i> <strong>Ask</strong> for forgiveness of sin (I John 1:9)</li>
-                        <li style="margin-bottom: 15px; font-size: 1.1rem;"><i class="fas fa-check-circle" style="color: var(--accent-gold); margin-right: 10px;"></i> <strong>Repent</strong> of those sins (Act 3:19)</li>
-                        <li style="margin-bottom: 15px; font-size: 1.1rem;"><i class="fas fa-check-circle" style="color: var(--accent-gold); margin-right: 10px;"></i> <strong>Forsake</strong> all your old ways and sinful habits (Luke 14: 33)</li>
-                        <li style="font-size: 1.1rem;"><i class="fas fa-check-circle" style="color: var(--accent-gold); margin-right: 10px;"></i> <strong>Join</strong> a Bible-believing Church (Hebrew 10:25)</li>
-                    </ul>
-                </div>
-                <button class="btn btn-salvation" onclick="window.location.href='#contact'">I Have Decided To Follow Jesus</button>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- FOOTER -->
-    <footer id="contact">
+    <footer id="contact" role="contentinfo">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-about">
-                    <h2><i class="fas fa-dove" style="color: var(--accent-gold); margin-right: 10px;"></i> RCCG Christ the Anchor</h2>
-                    <p>A place of true worship, vibrant fellowship, and continuous spiritual growth in the heart of Abuja.</p>
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>RCCG Christ the Anchor Parish is a community of believers anchored in Christ, dedicated to worship, fellowship, and service.</p>
                     <div class="footer-social">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Visit our Facebook page" rel="noopener noreferrer"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Follow us on Twitter" rel="noopener noreferrer"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Follow us on Instagram" rel="noopener noreferrer"><i class="fab fa-instagram" aria-hidden="true"></i></a>
                     </div>
                 </div>
-                
-                <div class="footer-links">
+
+                <div class="footer-section">
                     <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#media">Media & Events</a></li>
-                        <li><a href="#media">Upcoming Events</a></li>
-                        <li><a href="#salvation">Salvation</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
+                    <ul role="list">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Service Times</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-links">
-                    <h3>Useful Links</h3>
-                    <ul>
-                        <li><a href="https://rccg.org/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
-                        <li><a href="https://residents.rccg.org/login" target="_blank" rel="noopener noreferrer">Camp Residents' Portal</a></li>
-                        <li><a href="https://www.rccgpsf.com/" target="_blank" rel="noopener noreferrer">Pastors' Seed Family</a></li>
-                        <li><a href="https://www.rccg.org/the-redemption-city/" target="_blank" rel="noopener noreferrer">The Redemption City Directory</a></li>
+
+                <div class="footer-section">
+                    <h3>Service Times</h3>
+                    <ul role="list">
+                        <li>Sunday: 8:00 AM - 10:30 AM</li>
+                        <li>Tuesday: 6:00 PM</li>
+                        <li>Thursday: 6:00 PM</li>
+                        <li>Saturday: 8:00 AM</li>
                     </ul>
                 </div>
-                
-                <div class="footer-contact">
-                    <h3>Contact Information</h3>
+
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
                     <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Jikwoyi Phase 2, FCT Abuja<br>Nigeria</span>
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Jikwoyi Phase 2, FCT Abuja, Nigeria</span>
                     </div>
                     <div class="contact-item">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>+234 (0) 800 000 0000</span>
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span><a href="tel:+234XXXXXXXXXX">+234 (0) XXX XXX XXXX</a></span>
                     </div>
                     <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>info@christtheanchor.org</span>
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span><a href="mailto:info@christtheanchorparish.org">info@christtheanchorparish.org</a></span>
                     </div>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
-                <p>&copy; 2026 RCCG Christ the Anchor Parish. All Rights Reserved.</p>
-                <div style="display: flex; gap: 20px;">
-                    <a href="#" style="color: var(--accent-gold); font-size: 0.9rem;">Privacy Policy</a>
-                    <a href="#" style="color: var(--accent-gold); font-size: 0.9rem;">Terms of Use</a>
-                </div>
+                <p>&copy; <span class="js-current-year">2026</span> RCCG Christ the Anchor Parish. All rights reserved.</p>
+                <p>
+                    FCT Province 17 | Abuja, Nigeria | 
+                    <a href="legal.html">Legal Notice</a> | 
+                    <a href="privacy.html">Privacy Policy</a> | 
+                    <a href="terms.html">Terms of Service</a>
+                </p>
             </div>
         </div>
     </footer>
 
+    <!-- BACK TO TOP BUTTON -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
     <!-- VIRTUAL APOSTLE WIDGET -->
-    <div class="virtual-apostle-widget">
+    <div class="virtual-apostle-widget" aria-label="Chat widget">
         <div class="apostle-tooltip">
             Chat with <span>Apostle Stephen</span>
         </div>
         <a href="https://vr.rccgworld.org/bot.html" target="_blank" rel="noopener noreferrer" class="apostle-btn" aria-label="Chat with Apostle Stephen">
-            <i class="fas fa-robot"></i>
+            <i class="fas fa-robot" aria-hidden="true"></i>
         </a>
     </div>
 
-    <!-- BACK TO TOP -->
-    <button id="backToTop" class="back-to-top" aria-label="Back to top">â†‘</button>
-
     <!-- SCRIPTS -->
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
 

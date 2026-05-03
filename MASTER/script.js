@@ -1,317 +1,485 @@
 ﻿/* ========================================
-   MASTER SCRIPT - RCCG Christ the Anchor Parish
-   Modern, ES6-ready interactive behavior
+   RCCG CHRIST THE ANCHOR - MASTER SCRIPT v3.0
+   Production-Ready | ES6+ | Modern Best Practices
    ======================================== */
 
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const navMenu = document.getElementById('navMenu');
-const navLinks = Array.from(document.querySelectorAll('nav a'));
-const backToTopBtn = document.getElementById('backToTop');
-const contactForm = document.getElementById('contactForm');
-const eventsCarousel = document.getElementById('eventsCarousel');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const slides = Array.from(document.querySelectorAll('.slide'));
-const eventSlides = Array.from(document.querySelectorAll('.event-slide'));
-const formInputs = contactForm ? Array.from(contactForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select')) : [];
+'use strict';
 
-let currentSlide = 0;
-let currentEventSlide = 0;
+// ========================================
+// 1. CONFIGURATION & CONSTANTS
+// ========================================
 
-const debounce = (fn, wait = 120) => {
+const CONFIG = {
+    MOBILE_BREAKPOINT: 880,
+    SCROLL_THRESHOLD: 300,
+    CAROUSEL_INTERVAL: 5000,
+    EVENT_CAROUSEL_INTERVAL: 8000,
+    DEBOUNCE_DELAY: 80,
+    ANIMATION_DELAY: 500,
+    FORM_SUCCESS_TIMEOUT: 5000,
+    MIN_MESSAGE_LENGTH: 10,
+};
+
+const SELECTORS = {
+    mobileMenuBtn: '#mobileMenuBtn',
+    navMenu: '#navMenu',
+    navLinks: 'nav a',
+    backToTopBtn: '#backToTop',
+    contactForm: '#contactForm',
+    formStatus: '#formStatus',
+    eventsCarousel: '#eventsCarousel',
+    prevBtn: '#prevBtn',
+    nextBtn: '#nextBtn',
+    slides: '.slide',
+    eventSlides: '.event-slide',
+    formInputs: '#contactForm input[type="text"], #contactForm input[type="email"], #contactForm input[type="tel"], #contactForm textarea, #contactForm select',
+};
+
+// ========================================
+// 2. DOM CACHE & STATE
+// ========================================
+
+const DOM = {};
+const state = {
+    currentSlide: 0,
+    currentEventSlide: 0,
+    isMenuOpen: false,
+    isFetching: false,
+};
+
+// ========================================
+// 3. INITIALIZATION
+// ========================================
+
+const initializeDOMCache = () => {
+    DOM.mobileMenuBtn = document.querySelector(SELECTORS.mobileMenuBtn);
+    DOM.navMenu = document.querySelector(SELECTORS.navMenu);
+    DOM.navLinks = Array.from(document.querySelectorAll(SELECTORS.navLinks));
+    DOM.backToTopBtn = document.querySelector(SELECTORS.backToTopBtn);
+    DOM.contactForm = document.querySelector(SELECTORS.contactForm);
+    DOM.formStatus = document.querySelector(SELECTORS.formStatus);
+    DOM.eventsCarousel = document.querySelector(SELECTORS.eventsCarousel);
+    DOM.prevBtn = document.querySelector(SELECTORS.prevBtn);
+    DOM.nextBtn = document.querySelector(SELECTORS.nextBtn);
+    DOM.slides = Array.from(document.querySelectorAll(SELECTORS.slides));
+    DOM.eventSlides = Array.from(document.querySelectorAll(SELECTORS.eventSlides));
+    DOM.formInputs = DOM.contactForm 
+        ? Array.from(document.querySelectorAll(SELECTORS.formInputs))
+        : [];
+};
+
+// ========================================
+// 4. UTILITY FUNCTIONS
+// ========================================
+
+const debounce = (func, wait = CONFIG.DEBOUNCE_DELAY) => {
     let timeoutId;
     return (...args) => {
         clearTimeout(timeoutId);
-        timeoutId = window.setTimeout(() => fn(...args), wait);
+        timeoutId = setTimeout(() => func(...args), wait);
+    };
+};
+
+const throttle = (func, wait = CONFIG.DEBOUNCE_DELAY) => {
+    let lastCall = 0;
+    return (...args) => {
+        const now = Date.now();
+        if (now - lastCall >= wait) {
+            lastCall = now;
+            func(...args);
+        }
     };
 };
 
 const clampIndex = (value, length) => ((value % length) + length) % length;
 
-const closeMobileNav = () => {
-    if (!navMenu || !mobileMenuBtn) return;
-    navMenu.classList.remove('show');
-    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
 };
 
-const toggleMobileNav = () => {
-    if (!navMenu || !mobileMenuBtn) return;
-    const isOpen = navMenu.classList.toggle('show');
-    mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+const validatePhone = (phone) => {
+    if (!phone) return true;
+    const phonePattern = /^\+?[0-9\s\-().]{7,20}$/;
+    return phonePattern.test(phone);
+};
+
+// ========================================
+// 5. MOBILE MENU MANAGEMENT
+// ========================================
+
+const closeMobileMenu = () => {
+    if (!DOM.navMenu || !DOM.mobileMenuBtn) return;
+    DOM.navMenu.classList.remove('show');
+    DOM.mobileMenuBtn.setAttribute('aria-expanded', 'false');
+    state.isMenuOpen = false;
+};
+
+const toggleMobileMenu = () => {
+    if (!DOM.navMenu || !DOM.mobileMenuBtn) return;
+    state.isMenuOpen = DOM.navMenu.classList.toggle('show');
+    DOM.mobileMenuBtn.setAttribute('aria-expanded', String(state.isMenuOpen));
+};
+
+const initializeMobileMenu = () => {
+    if (!DOM.mobileMenuBtn) return;
+
+    DOM.mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('nav') && !event.target.closest('.mobile-menu-btn')) {
+            closeMobileMenu();
+        }
+    });
+
+    window.addEventListener('resize', debounce(() => {
+        if (window.innerWidth > CONFIG.MOBILE_BREAKPOINT) {
+            closeMobileMenu();
+        }
+    }, 150));
+};
+
+// ========================================
+// 6. NAVIGATION MANAGEMENT
+// ========================================
+
+const scrollToTarget = (id) => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    target.focus();
 };
 
 const updateActiveNavLink = () => {
-    const sections = Array.from(document.querySelectorAll('section[id]'));
+    const sections = Array.from(document.querySelectorAll('section[id], footer[id]'));
+    if (sections.length === 0) return;
+
     const scrollPosition = window.scrollY + 200;
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
     let activeSectionId = null;
 
-    if (sections.length) {
-        sections.forEach(section => {
-            if (scrollPosition >= section.offsetTop) {
-                activeSectionId = section.id;
-            }
-        });
-    }
+    sections.forEach((section) => {
+        if (scrollPosition >= section.offsetTop) {
+            activeSectionId = section.id;
+        }
+    });
 
-    navLinks.forEach(link => {
+    DOM.navLinks.forEach((link) => {
         const href = link.getAttribute('href') || '';
 
         if (href.startsWith('#')) {
             link.classList.toggle('active', href === `#${activeSectionId}`);
         } else {
             const sanitizedHref = href.split('/').pop();
-            const isIndexAlias = (!sanitizedHref || sanitizedHref === 'index.html') && (currentPath === '' || currentPath === 'index.html');
+            const isIndexAlias = (!sanitizedHref || sanitizedHref === 'index.html') && 
+                               (currentPath === '' || currentPath === 'index.html');
             link.classList.toggle('active', sanitizedHref === currentPath || isIndexAlias);
         }
     });
 };
 
-const scrollToTarget = id => {
-    const target = document.getElementById(id);
-    if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-};
+const initializeNavigation = () => {
+    if (DOM.navLinks.length === 0) return;
 
-const showSlide = index => {
-    if (!slides.length) return;
-    currentSlide = clampIndex(index, slides.length);
-    slides.forEach((slide, slideIndex) => {
-        slide.classList.toggle('active', slideIndex === currentSlide);
+    DOM.navLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+            closeMobileMenu();
+            if (link.getAttribute('href')?.startsWith('#')) {
+                event.preventDefault();
+                scrollToTarget(link.getAttribute('href').slice(1));
+            }
+        });
     });
 };
 
-const nextSlide = () => showSlide(currentSlide + 1);
+// ========================================
+// 7. SLIDESHOW FUNCTIONALITY
+// ========================================
 
-const showEventSlide = index => {
-    if (!eventsCarousel || !eventSlides.length) return;
-    currentEventSlide = clampIndex(index, eventSlides.length);
-    eventsCarousel.style.transform = `translateX(-${currentEventSlide * 100}%)`;
+const showSlide = (index) => {
+    if (DOM.slides.length === 0) return;
+    state.currentSlide = clampIndex(index, DOM.slides.length);
+    DOM.slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === state.currentSlide);
+    });
 };
 
-const nextEventSlide = () => showEventSlide(currentEventSlide + 1);
-const prevEventSlide = () => showEventSlide(currentEventSlide - 1);
+const nextSlide = () => showSlide(state.currentSlide + 1);
 
-const showError = (fieldId, message) => {
-    const field = contactForm?.querySelector(`#${fieldId}`);
+const initializeSlideshow = () => {
+    if (DOM.slides.length === 0) return;
+    showSlide(0);
+    setInterval(nextSlide, CONFIG.CAROUSEL_INTERVAL);
+};
+
+// ========================================
+// 8. EVENT CAROUSEL
+// ========================================
+
+const showEventSlide = (index) => {
+    if (!DOM.eventsCarousel || DOM.eventSlides.length === 0) return;
+    state.currentEventSlide = clampIndex(index, DOM.eventSlides.length);
+    DOM.eventsCarousel.style.transform = `translateX(-${state.currentEventSlide * 100}%)`;
+};
+
+const nextEventSlide = () => showEventSlide(state.currentEventSlide + 1);
+const prevEventSlide = () => showEventSlide(state.currentEventSlide - 1);
+
+const initializeEventCarousel = () => {
+    if (!DOM.eventSlides.length) return;
+    showEventSlide(0);
+    if (DOM.nextBtn) DOM.nextBtn.addEventListener('click', nextEventSlide);
+    if (DOM.prevBtn) DOM.prevBtn.addEventListener('click', prevEventSlide);
+    setInterval(nextEventSlide, CONFIG.EVENT_CAROUSEL_INTERVAL);
+};
+
+// ========================================
+// 9. FORM MANAGEMENT
+// ========================================
+
+const showFormError = (fieldId, message) => {
+    const field = DOM.contactForm?.querySelector(`#${fieldId}`);
     if (!field) return;
+
     const formGroup = field.closest('.form-group');
     const errorMsg = formGroup?.querySelector('.error-msg');
 
     formGroup?.classList.add('error');
+    field.setAttribute('aria-invalid', 'true');
+    field.setCustomValidity(message);
     if (errorMsg) errorMsg.textContent = message;
 };
 
-const clearError = field => {
+const clearFormError = (field) => {
     const formGroup = field.closest('.form-group');
     const errorMsg = formGroup?.querySelector('.error-msg');
 
     formGroup?.classList.remove('error');
+    field.removeAttribute('aria-invalid');
+    field.setCustomValidity('');
     if (errorMsg) errorMsg.textContent = '';
 };
 
-const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const validateContactForm = () => {
+    const name = DOM.contactForm.querySelector('#name')?.value.trim() || '';
+    const email = DOM.contactForm.querySelector('#email')?.value.trim() || '';
+    const phone = DOM.contactForm.querySelector('#phone')?.value.trim() || '';
+    const subject = DOM.contactForm.querySelector('#subject')?.value || '';
+    const message = DOM.contactForm.querySelector('#message')?.value.trim() || '';
 
-const enhanceImages = () => {
-    document.querySelectorAll('img').forEach(img => {
-        img.decoding = 'async';
-        if (!img.closest('.hero')) {
-            img.loading = 'lazy';
-        }
-    });
-};
+    let isValid = true;
 
-const initializeObserver = () => {
-    if (!('IntersectionObserver' in window)) return;
+    // Reset errors
+    DOM.formInputs.forEach((input) => clearFormError(input));
 
-    const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-                obs.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+    // Validation logic
+    if (!name) {
+        showFormError('name', 'Please enter your full name');
+        isValid = false;
+    }
 
-    document.querySelectorAll('.card, .service-card, .ministry-card, .gallery-item, .event-item, .testimonial-block').forEach(el => {
-        el.classList.add('will-animate');
-        observer.observe(el);
-    });
+    if (!email) {
+        showFormError('email', 'Please enter your email address');
+        isValid = false;
+    } else if (!isValidEmail(email)) {
+        showFormError('email', 'Please enter a valid email address');
+        isValid = false;
+    }
+
+    if (phone && !validatePhone(phone)) {
+        showFormError('phone', 'Please enter a valid phone number');
+        isValid = false;
+    }
+
+    if (!subject) {
+        showFormError('subject', 'Please select a subject');
+        isValid = false;
+    }
+
+    if (!message || message.length < CONFIG.MIN_MESSAGE_LENGTH) {
+        showFormError('message', `Please enter a message with at least ${CONFIG.MIN_MESSAGE_LENGTH} characters`);
+        isValid = false;
+    }
+
+    return isValid;
 };
 
 const setupContactForm = () => {
-    if (!contactForm) return;
+    if (!DOM.contactForm) return;
 
-    contactForm.addEventListener('submit', event => {
+    DOM.formStatus?.setAttribute('aria-live', 'polite');
+    DOM.formStatus?.setAttribute('role', 'status');
+    DOM.formStatus?.setAttribute('aria-atomic', 'true');
+
+    DOM.contactForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        const formStatus = document.getElementById('formStatus');
-        let isValid = true;
 
-        formInputs.forEach(input => clearError(input));
-        if (formStatus) {
-            formStatus.className = 'form-status';
-            formStatus.textContent = '';
-        }
+        if (state.isFetching) return;
 
-        const name = contactForm.querySelector('#name')?.value.trim() || '';
-        const email = contactForm.querySelector('#email')?.value.trim() || '';
-        const subject = contactForm.querySelector('#subject')?.value || '';
-        const message = contactForm.querySelector('#message')?.value.trim() || '';
+        if (validateContactForm()) {
+            state.isFetching = true;
+            DOM.formStatus.classList.add('success');
+            DOM.formStatus.classList.remove('error');
+            DOM.formStatus.innerHTML = '✓ Thank you! Your message has been sent successfully. We will get back to you soon.';
+            DOM.contactForm.reset();
 
-        if (!name) {
-            showError('name', 'Please enter your full name');
-            isValid = false;
-        }
-
-        if (!email) {
-            showError('email', 'Please enter your email address');
-            isValid = false;
-        } else if (!isValidEmail(email)) {
-            showError('email', 'Please enter a valid email address');
-            isValid = false;
-        }
-
-        if (!subject) {
-            showError('subject', 'Please select a subject');
-            isValid = false;
-        }
-
-        if (!message || message.length < 10) {
-            showError('message', 'Please enter a message with at least 10 characters');
-            isValid = false;
-        }
-
-        if (!formStatus) return;
-
-        if (isValid) {
-            formStatus.classList.add('success');
-            formStatus.textContent = '✓ Thank you! Your message has been sent successfully. We will get back to you soon.';
-            contactForm.reset();
-            window.setTimeout(() => {
-                formStatus.textContent = '';
-                formStatus.classList.remove('success');
-            }, 5000);
+            setTimeout(() => {
+                DOM.formStatus.textContent = '';
+                DOM.formStatus.classList.remove('success');
+                state.isFetching = false;
+            }, CONFIG.FORM_SUCCESS_TIMEOUT);
         } else {
-            formStatus.classList.add('error');
-            formStatus.textContent = '✗ Please fix the errors above and try again.';
+            DOM.formStatus.classList.add('error');
+            DOM.formStatus.classList.remove('success');
+            DOM.formStatus.innerHTML = '✗ Please fix the errors above and try again.';
         }
     });
 
-    contactForm.addEventListener('input', event => {
+    DOM.contactForm.addEventListener('input', (event) => {
         const target = event.target;
         if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
-            clearError(target);
+            clearFormError(target);
         }
     });
 
-    formInputs.forEach((input, index) => {
-        input.addEventListener('keypress', event => {
+    DOM.formInputs.forEach((input, index) => {
+        input.addEventListener('keypress', (event) => {
             if (event.key !== 'Enter') return;
             event.preventDefault();
-            const nextInput = formInputs[index + 1];
+            const nextInput = DOM.formInputs[index + 1];
             if (nextInput) nextInput.focus();
         });
     });
 };
 
-const initializeNavigation = () => {
-    mobileMenuBtn?.addEventListener('click', toggleMobileNav);
+// ========================================
+// 10. INTERSECTION OBSERVER
+// ========================================
 
-    document.addEventListener('click', event => {
-        if (!event.target.closest('nav') && !event.target.closest('.mobile-menu-btn')) {
-            closeMobileNav();
-        }
-    });
-
-    window.addEventListener('resize', debounce(() => {
-        if (window.innerWidth > 768) closeMobileNav();
-    }, 150));
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', event => {
-            closeMobileNav();
-            if (link.getAttribute('href')?.startsWith('#')) {
-                event.preventDefault();
-                scrollToTarget(link.getAttribute('href').slice(1));
-            }
-            navLinks.forEach(item => item.classList.remove('active'));
-            link.classList.add('active');
+const initializeObserver = () => {
+    if (!('IntersectionObserver' in window)) {
+        // Fallback for older browsers
+        document.querySelectorAll('.animate-on-scroll, .will-animate').forEach(el => {
+            el.classList.add('in-view');
         });
-    });
-};
-
-const initializeSlideshow = () => {
-    if (!slides.length) return;
-    showSlide(0);
-    window.setInterval(nextSlide, 5000);
-};
-
-const initializeEventCarousel = () => {
-    if (!eventSlides.length) return;
-    showEventSlide(0);
-    nextBtn?.addEventListener('click', nextEventSlide);
-    prevBtn?.addEventListener('click', prevEventSlide);
-    window.setInterval(nextEventSlide, 8000);
-};
-
-const updateFooterYear = () => {
-    const currentYear = new Date().getFullYear();
-    const yearNodes = Array.from(document.querySelectorAll('[data-current-year], .js-current-year'));
-    yearNodes.forEach(el => {
-        el.textContent = String(currentYear);
-    });
-
-    const footerText = document.querySelector('footer p');
-    if (footerText) {
-        footerText.textContent = footerText.textContent.replace(/\d{4}/, String(currentYear));
+        return;
     }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { 
+        threshold: 0.12, 
+        rootMargin: '0px 0px -80px 0px' 
+    });
+
+    document.querySelectorAll('.animate-on-scroll, .will-animate, .card, .card--premium, .card--visual, .service-card, .ministry-card, .gallery-item, .event-item, .testimonial-block').forEach((el) => {
+        observer.observe(el);
+    });
 };
+
+// ========================================
+// 11. BACK TO TOP
+// ========================================
 
 const toggleBackToTop = () => {
-    if (!backToTopBtn) return;
-    backToTopBtn.classList.toggle('show', window.scrollY > 300);
+    if (!DOM.backToTopBtn) return;
+    DOM.backToTopBtn.classList.toggle('show', window.scrollY > CONFIG.SCROLL_THRESHOLD);
 };
 
+const initializeBackToTop = () => {
+    if (!DOM.backToTopBtn) return;
+    DOM.backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+};
+
+// ========================================
+// 12. ACCESSIBILITY
+// ========================================
+
 const initializeAccessibility = () => {
-    document.addEventListener('keydown', event => {
+    document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-            closeMobileNav();
+            closeMobileMenu();
         }
 
         if (event.key === 'ArrowUp' && event.ctrlKey) {
+            event.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     });
 };
 
+// ========================================
+// 13. FOOTER UPDATES
+// ========================================
+
+const updateFooterYear = () => {
+    const currentYear = new Date().getFullYear();
+    const yearNodes = Array.from(document.querySelectorAll('[data-current-year], .js-current-year'));
+    yearNodes.forEach((el) => {
+        el.textContent = String(currentYear);
+    });
+};
+
+// ========================================
+// 14. ERROR HANDLING
+// ========================================
+
+const setupErrorHandling = () => {
+    window.addEventListener('error', (event) => {
+        console.error('Script error:', event.message, 'at', `${event.filename}:${event.lineno}`);
+    });
+
+    window.addEventListener('unhandledrejection', (event) => {
+        console.error('Unhandled promise rejection:', event.reason);
+    });
+};
+
+// ========================================
+// 15. INITIALIZATION
+// ========================================
+
 const initialize = () => {
+    // Cache DOM elements
+    initializeDOMCache();
+
+    // Initialize features
+    initializeMobileMenu();
     initializeNavigation();
     initializeSlideshow();
     initializeEventCarousel();
     setupContactForm();
     initializeObserver();
-    enhanceImages();
     updateFooterYear();
     updateActiveNavLink();
     initializeAccessibility();
+    initializeBackToTop();
+    setupErrorHandling();
 
-    if (backToTopBtn) {
-        backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    }
-
+    // Event listeners
     window.addEventListener('scroll', debounce(() => {
         updateActiveNavLink();
         toggleBackToTop();
-    }, 80));
+    }, CONFIG.DEBOUNCE_DELAY));
 
-    window.addEventListener('error', event => {
-        console.error('Script error:', event.message, 'at', `${event.filename}:${event.lineno}`);
-    });
-
-    window.addEventListener('unhandledrejection', event => {
-        console.error('Unhandled promise rejection:', event.reason);
-    });
+    // Log initialization
+    console.log('%c Welcome to RCCG Christ the Anchor Parish', 'font-size: 16px; color: #009444; font-weight: bold;');
+    console.log('%c Anchored in Christ | Growing in Grace | Making Heaven Together', 'font-size: 12px; color: #fad03b; font-style: italic;');
 };
 
-document.addEventListener('DOMContentLoaded', initialize);
+// Start initialization when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialize);
+} else {
+    initialize();
+}
+
+// Expose functions globally for inline handlers (minimal)
+window.scrollToSection = (id) => scrollToTarget(id);

@@ -1,503 +1,287 @@
 /* ========================================
-   MASTER SCRIPT - RCCG Christ the Anchor Parish
-   All interactive functionality combined
+   RCCG CHRIST THE ANCHOR - SINGLE SCRIPT
+   Safe initialization, unified naming, ES6+
    ======================================== */
 
-// ========================================
-// 1. DOM ELEMENTS
-// ========================================
+'use strict';
 
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const navMenu = document.getElementById('navMenu');
-const navLinks = document.querySelectorAll('nav a');
-const backToTopBtn = document.getElementById('backToTop');
-const contactForm = document.getElementById('contactForm');
-const eventsCarousel = document.getElementById('eventsCarousel');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-
-const slides = document.querySelectorAll('.slide');
-const formInputs = contactForm ? contactForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]') : [];
-
-// ========================================
-// 2. VARIABLES
-// ========================================
-
-let currentSlide = 0;
-let currentEventSlide = 0;
-const eventSlides = document.querySelectorAll('.event-slide');
-
-// ========================================
-// 3. MOBILE MENU TOGGLE
-// ========================================
-
-if (mobileMenuBtn) {
-    mobileMenuBtn.addEventListener('click', function() {
-        if (navMenu) {
-            const isOpen = navMenu.classList.toggle('show');
-            mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        }
-    });
-}
-
-// Close menu when a link is clicked
-navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-        if (navMenu) {
-            navMenu.classList.remove('show');
-        }
-        if (mobileMenuBtn) {
-            mobileMenuBtn.setAttribute('aria-expanded', 'false');
-        }
-        
-        // Update active link
-        navLinks.forEach(l => l.classList.remove('active'));
-        this.classList.add('active');
-    });
-});
-
-// Close menu when clicking outside
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('nav') && !e.target.closest('.mobile-menu-btn')) {
-        if (navMenu) {
-            navMenu.classList.remove('show');
-        }
-    }
-});
-
-// ========================================
-// 4. SLIDESHOW FUNCTIONALITY
-// ========================================
-
-function showSlide(n) {
-    if (!slides.length) return;
-
-    slides.forEach(slide => {
-        slide.classList.remove('active', 'fade');
-    });
-    
-    if (n >= slides.length) {
-        currentSlide = 0;
-    } else if (n < 0) {
-        currentSlide = slides.length - 1;
-    }
-    
-    slides[currentSlide].classList.add('active', 'fade');
-}
-
-function nextSlide() {
-    currentSlide++;
-    showSlide(currentSlide);
-}
-
-// Auto-advance slideshow every 5 seconds
-setInterval(nextSlide, 5000);
-
-// Initialize slideshow
-showSlide(currentSlide);
-
-// ========================================
-// 5. EVENT CAROUSEL FUNCTIONALITY
-// ========================================
-
-function showEventSlide(n) {
-    if (!eventsCarousel || !eventSlides.length) return;
-    const totalSlides = eventSlides.length;
-    const offset = -n * 100;
-    eventsCarousel.style.transform = `translateX(${offset}%)`;
-}
-
-function nextEventSlide() {
-    currentEventSlide++;
-    if (currentEventSlide >= eventSlides.length) {
-        currentEventSlide = 0;
-    }
-    showEventSlide(currentEventSlide);
-}
-
-function prevEventSlide() {
-    currentEventSlide--;
-    if (currentEventSlide < 0) {
-        currentEventSlide = eventSlides.length - 1;
-    }
-    showEventSlide(currentEventSlide);
-}
-
-// Event listeners for carousel buttons
-if (nextBtn) {
-    nextBtn.addEventListener('click', nextEventSlide);
-}
-
-if (prevBtn) {
-    prevBtn.addEventListener('click', prevEventSlide);
-}
-
-// Auto advance event carousel every 8 seconds
-setInterval(nextEventSlide, 8000);
-
-// ========================================
-// 6. SMOOTH SCROLLING
-// ========================================
-
-navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        
-        // Only prevent default for anchor links
-        if (href.startsWith('#')) {
-            e.preventDefault();
-            const targetId = href.substring(1);
-            const targetElement = document.getElementById(targetId);
-            
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        }
-    });
-});
-
-// ========================================
-// 7. ACTIVE NAV LINK ON SCROLL
-// ========================================
-
-function toggleBackToTop() {
-    if (!backToTopBtn) return;
-
-    if (window.scrollY > 300) {
-        backToTopBtn.classList.add('show');
-    } else {
-        backToTopBtn.classList.remove('show');
-    }
-}
-
-window.addEventListener('scroll', debounce(function() {
-    updateActiveNavLink();
-    toggleBackToTop();
-}, 80));
-
-// ========================================
-// 8. BACK TO TOP BUTTON
-// ========================================
-
-
-if (backToTopBtn) {
-    backToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-}
-
-// ========================================
-// 9. FORM VALIDATION & SUBMISSION
-// ========================================
-
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Reset previous states
-        const formGroups = contactForm.querySelectorAll('.form-group');
-        const formStatus = document.getElementById('formStatus');
-    
-    formGroups.forEach(group => group.classList.remove('error'));
-    formStatus.textContent = '';
-    
-    // Get form values
-    const name = contactForm.querySelector('#name').value.trim();
-    const email = contactForm.querySelector('#email').value.trim();
-    const subject = contactForm.querySelector('#subject').value;
-    const message = contactForm.querySelector('#message').value.trim();
-    
-    let isValid = true;
-    
-    // Validate name
-    if (!name) {
-        showError('name', 'Please enter your full name');
-        isValid = false;
-    }
-    
-    // Validate email
-    if (!email) {
-        showError('email', 'Please enter your email address');
-        isValid = false;
-    } else if (!isValidEmail(email)) {
-        showError('email', 'Please enter a valid email address');
-        isValid = false;
-    }
-    
-    // Validate subject
-    if (!subject) {
-        showError('subject', 'Please select a subject');
-        isValid = false;
-    }
-    
-    // Validate message
-    if (!message) {
-        showError('message', 'Please enter your message');
-        isValid = false;
-    } else if (message.length < 10) {
-        showError('message', 'Message must be at least 10 characters long');
-        isValid = false;
-    }
-    
-    if (isValid) {
-        // Show success message
-        formStatus.classList.add('success');
-        formStatus.classList.remove('error');
-        formStatus.textContent = '✓ Thank you! Your message has been sent successfully. We will get back to you soon.';
-        
-        // Reset form
-        contactForm.reset();
-        
-        // In a real application, you would send the data to a server here
-        console.log({
-            name: name,
-            email: email,
-            subject: subject,
-            message: message
-        });
-        
-        // Clear success message after 5 seconds
-        setTimeout(function() {
-            formStatus.textContent = '';
-            formStatus.classList.remove('success');
-        }, 5000);
-    } else {
-        // Show error message
-        formStatus.classList.add('error');
-        formStatus.classList.remove('success');
-        formStatus.textContent = '✗ Please fix the errors above and try again.';
-    }
-});
-
-function showError(fieldId, message) {
-    const field = contactForm.querySelector('#' + fieldId);
-    const formGroup = field.closest('.form-group');
-    const errorMsg = formGroup.querySelector('.error-msg');
-    
-    formGroup.classList.add('error');
-    errorMsg.textContent = message;
-}
-
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// ========================================
-// 10. CLEAR FORM ERRORS ON INPUT
-// ========================================
-
-    contactForm.addEventListener('input', function(e) {
-        const field = e.target;
-        const formGroup = field.closest('.form-group');
-        if (!formGroup) return;
-        formGroup.classList.remove('error');
-        const errorMsg = formGroup.querySelector('.error-msg');
-        if (errorMsg) {
-            errorMsg.textContent = '';
-        }
-    });
-}
-
-// ========================================
-// 11. UPDATE FOOTER YEAR DYNAMICALLY
-// ========================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    const currentYear = new Date().getFullYear();
-    const footerYear = document.querySelector('footer p');
-    
-    if (footerYear) {
-        footerYear.textContent = footerYear.textContent.replace('2026', currentYear);
-    }
-});
-
-// ========================================
-// 12. ACCESSIBILITY - KEYBOARD NAVIGATION
-// ========================================
-
-document.addEventListener('keydown', function(e) {
-    // Escape key closes mobile menu
-    if (e.key === 'Escape') {
-        if (navMenu) {
-            navMenu.classList.remove('show');
-        }
-    }
-    
-    // Ctrl+ArrowUp for back to top
-    if (e.key === 'ArrowUp' && e.ctrlKey) {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-});
-
-// ========================================
-// 13. PREVENT FORM SUBMISSION ENTER KEY
-// ========================================
-
-formInputs.forEach(input => {
-    input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const nextInput = findNextInput(this);
-            if (nextInput) {
-                nextInput.focus();
-            }
-        }
-    });
-});
-
-function findNextInput(currentInput) {
-    const inputs = Array.from(formInputs);
-    const currentIndex = inputs.indexOf(currentInput);
-    return inputs[currentIndex + 1] || null;
-}
-
-// ========================================
-// 14. INTERSECTION OBSERVER FOR ANIMATIONS
-// ======================================== 
-
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
+const appSelectors = {
+    mobileMenuBtn: '#mobileMenuBtn',
+    navMenu: '#navMenu',
+    navLinks: 'nav a',
+    backToTopBtn: '#backToTop',
+    contactForm: '#contactForm',
+    formStatus: '#formStatus',
+    heroSlides: '.slide',
+    eventsCarousel: '#eventsCarousel',
+    prevBtn: '#prevBtn',
+    nextBtn: '#nextBtn',
 };
 
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
-        }
-    });
-}, observerOptions);
+const state = {
+    currentSlide: 0,
+    currentEventSlide: 0,
+    isSubmitting: false,
+};
 
-// Observe cards and sections for animation
-document.querySelectorAll('.card, .service-card, .ministry-card, .gallery-item').forEach(el => {
-    observer.observe(el);
-});
+const dom = {};
 
-// ========================================
-// 15. UTILITY FUNCTIONS
-// ========================================
-
-// Debounce function for scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+const debounce = (fn, delay = 80) => {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), delay);
     };
-}
+};
 
-// Add animation keyframes dynamically
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-`;
-document.head.appendChild(style);
+const clamp = (value, length) => ((value % length) + length) % length;
 
-// ========================================
-// 16. PERFORMANCE OPTIMIZATION
-// ========================================
+const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
-// Lazy load images if supported
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                if (img.dataset.src) {
-                    img.src = img.dataset.src;
-                }
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
-}
+const initializeDom = () => {
+    dom.mobileMenuBtn = document.querySelector(appSelectors.mobileMenuBtn);
+    dom.navMenu = document.querySelector(appSelectors.navMenu);
+    dom.navLinks = Array.from(document.querySelectorAll(appSelectors.navLinks));
+    dom.backToTopBtn = document.querySelector(appSelectors.backToTopBtn);
+    dom.contactForm = document.querySelector(appSelectors.contactForm);
+    dom.formStatus = document.querySelector(appSelectors.formStatus);
+    dom.heroSlides = Array.from(document.querySelectorAll(appSelectors.heroSlides));
+    dom.eventsCarousel = document.querySelector(appSelectors.eventsCarousel);
+    dom.prevBtn = document.querySelector(appSelectors.prevBtn);
+    dom.nextBtn = document.querySelector(appSelectors.nextBtn);
+};
 
-// ========================================
-// 17. ERROR HANDLING
-// ========================================
+const toggleMenu = () => {
+    if (!dom.navMenu || !dom.mobileMenuBtn) return;
+    const isOpen = dom.navMenu.classList.toggle('show');
+    dom.mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+};
 
-window.addEventListener('error', function(e) {
-    console.error('Error:', e.message);
-    // Could log to analytics or error tracking service
-});
+const closeMenu = () => {
+    if (!dom.navMenu || !dom.mobileMenuBtn) return;
+    dom.navMenu.classList.remove('show');
+    dom.mobileMenuBtn.setAttribute('aria-expanded', 'false');
+};
 
-// Handle promise rejections
-window.addEventListener('unhandledrejection', function(e) {
-    console.error('Unhandled Promise Rejection:', e.reason);
-});
+const initializeMenu = () => {
+    if (!dom.mobileMenuBtn) return;
 
-// ========================================
-// 18. INITIALIZATION
-// ========================================
+    dom.mobileMenuBtn.addEventListener('click', toggleMenu);
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize tooltips if any
-    initializeTooltips();
-    
-    // Set initial active nav link
-    updateActiveNavLink();
-});
-
-function updateActiveNavLink() {
-    const sections = document.querySelectorAll('section[id], footer[id]');
-    if (!sections.length) return;
-
-    const scrollPosition = window.scrollY + 220;
-    let current = sections[0].id;
-
-    sections.forEach(section => {
-        if (scrollPosition >= section.offsetTop) {
-            current = section.id;
-        }
+    dom.navLinks.forEach((link) => {
+        link.addEventListener('click', () => closeMenu());
     });
 
-    navLinks.forEach(link => {
-        const href = link.getAttribute('href');
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('nav') && !event.target.closest('.mobile-menu-btn')) {
+            closeMenu();
+        }
+    });
+};
+
+const showSlide = (index) => {
+    if (dom.heroSlides.length === 0) return;
+    state.currentSlide = clamp(index, dom.heroSlides.length);
+    dom.heroSlides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === state.currentSlide);
+    });
+};
+
+const startHeroSlideshow = () => {
+    if (dom.heroSlides.length === 0) return;
+    showSlide(0);
+    setInterval(() => showSlide(state.currentSlide + 1), 5000);
+};
+
+const updateActiveNav = () => {
+    if (!dom.navLinks.length) return;
+    const sections = Array.from(document.querySelectorAll('section[id], footer[id]'));
+    const position = window.scrollY + 220;
+    let current = sections.length ? sections[0].id : '';
+
+    sections.forEach((section) => {
+        if (position >= section.offsetTop) current = section.id;
+    });
+
+    dom.navLinks.forEach((link) => {
+        const href = link.getAttribute('href') || '';
         link.classList.toggle('active', href === `#${current}`);
     });
-}
+};
 
-function initializeTooltips() {
-    const tooltips = document.querySelectorAll('[data-tooltip]');
-    tooltips.forEach(element => {
-        element.addEventListener('mouseenter', function() {
-            const tooltip = document.createElement('div');
-            tooltip.className = 'tooltip';
-            tooltip.textContent = this.getAttribute('data-tooltip');
-            document.body.appendChild(tooltip);
+const smoothScroll = () => {
+    dom.navLinks.forEach((link) => {
+        const href = link.getAttribute('href') || '';
+        if (!href.startsWith('#')) return;
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const target = document.getElementById(href.slice(1));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
-}
+};
 
-// ========================================
-// 19. CONSOLE MESSAGE
-// ========================================
+const toggleBackToTop = () => {
+    if (!dom.backToTopBtn) return;
+    dom.backToTopBtn.classList.toggle('show', window.scrollY > 300);
+};
 
-console.log('%c Welcome to RCCG Christ the Anchor Parish', 'font-size: 16px; color: #006400; font-weight: bold;');
-console.log('%c Anchored in Christ | Growing in Grace | Making Heaven Together', 'font-size: 12px; color: #FFD700; font-style: italic;');
-console.log('%c Scripture: "But as for me and my household, we will serve the Lord." - Joshua 24:15', 'font-size: 11px; color: #1a365d;');
+const initializeBackToTop = () => {
+    if (!dom.backToTopBtn) return;
+    dom.backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+};
+
+const showFormError = (fieldId, message) => {
+    if (!dom.contactForm) return;
+    const field = dom.contactForm.querySelector(`#${fieldId}`);
+    if (!field) return;
+    const group = field.closest('.form-group');
+    const error = group?.querySelector('.error-msg');
+    group?.classList.add('error');
+    field.setAttribute('aria-invalid', 'true');
+    if (error) error.textContent = message;
+};
+
+const clearFieldError = (field) => {
+    if (!field) return;
+    const group = field.closest('.form-group');
+    const error = group?.querySelector('.error-msg');
+    group?.classList.remove('error');
+    field.removeAttribute('aria-invalid');
+    if (error) error.textContent = '';
+};
+
+const validateForm = () => {
+    if (!dom.contactForm) return false;
+
+    const name = dom.contactForm.querySelector('#name')?.value.trim() || '';
+    const email = dom.contactForm.querySelector('#email')?.value.trim() || '';
+    const subject = dom.contactForm.querySelector('#subject')?.value || '';
+    const message = dom.contactForm.querySelector('#message')?.value.trim() || '';
+    const phone = dom.contactForm.querySelector('#phone')?.value.trim() || '';
+
+    let valid = true;
+    dom.contactForm.querySelectorAll('.form-group').forEach((group) => group.classList.remove('error'));
+
+    if (!name) {
+        showFormError('name', 'Please enter your full name');
+        valid = false;
+    }
+
+    if (!email) {
+        showFormError('email', 'Please enter your email address');
+        valid = false;
+    } else if (!isValidEmail(email)) {
+        showFormError('email', 'Please enter a valid email address');
+        valid = false;
+    }
+
+    if (phone && !/^\+?[0-9\s\-().]{7,20}$/.test(phone)) {
+        showFormError('phone', 'Please enter a valid phone number');
+        valid = false;
+    }
+
+    if (!subject) {
+        showFormError('subject', 'Please select a subject');
+        valid = false;
+    }
+
+    if (!message || message.length < 10) {
+        showFormError('message', 'Message must be at least 10 characters long');
+        valid = false;
+    }
+
+    return valid;
+};
+
+const setupContactForm = () => {
+    if (!dom.contactForm) return;
+
+    const status = dom.formStatus;
+    status?.setAttribute('aria-live', 'polite');
+    status?.setAttribute('aria-atomic', 'true');
+
+    dom.contactForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (state.isSubmitting) return;
+
+        if (validateForm()) {
+            state.isSubmitting = true;
+            status?.classList.remove('error');
+            status?.classList.add('success');
+            if (status) status.textContent = '✓ Thank you! Your message has been sent.';
+
+            dom.contactForm.reset();
+            window.setTimeout(() => {
+                if (status) status.textContent = '';
+                status?.classList.remove('success');
+                state.isSubmitting = false;
+            }, 5000);
+        } else {
+            status?.classList.remove('success');
+            status?.classList.add('error');
+            if (status) status.textContent = '✗ Please fix the errors and try again.';
+        }
+    });
+
+    dom.contactForm.addEventListener('input', (event) => {
+        const target = event.target;
+        if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
+            clearFieldError(target);
+        }
+    });
+};
+
+const initializeEventCarousel = () => {
+    if (!dom.eventsCarousel) return;
+    const slides = Array.from(dom.eventsCarousel.querySelectorAll('.event-slide'));
+    if (!slides.length) return;
+
+    const showEventSlide = (index) => {
+        state.currentEventSlide = clamp(index, slides.length);
+        dom.eventsCarousel.style.transform = `translateX(-${state.currentEventSlide * 100}%)`;
+    };
+
+    dom.nextBtn?.addEventListener('click', () => showEventSlide(state.currentEventSlide + 1));
+    dom.prevBtn?.addEventListener('click', () => showEventSlide(state.currentEventSlide - 1));
+    setInterval(() => showEventSlide(state.currentEventSlide + 1), 8000);
+};
+
+const initializeKeyboardShortcuts = () => {
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeMenu();
+        if (event.key === 'ArrowUp' && event.ctrlKey) {
+            event.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+};
+
+const initializePage = () => {
+    initializeDom();
+    initializeMenu();
+    smoothScroll();
+    startHeroSlideshow();
+    initializeBackToTop();
+    setupContactForm();
+    initializeEventCarousel();
+    initializeKeyboardShortcuts();
+    updateActiveNav();
+    window.addEventListener('scroll', debounce(() => {
+        updateActiveNav();
+        toggleBackToTop();
+    }, 80));
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('nav') && !event.target.closest('.mobile-menu-btn')) {
+            closeMenu();
+        }
+    });
+
+    window.addEventListener('error', (event) => console.error('Error:', event.message));
+    window.addEventListener('unhandledrejection', (event) => console.error('Unhandled promise rejection:', event.reason));
+};
+
+document.addEventListener('DOMContentLoaded', initializePage);
