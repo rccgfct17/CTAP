@@ -1,231 +1,169 @@
-/* ========================================
+﻿/* ========================================
    MASTER SCRIPT - RCCG Christ the Anchor Parish
-   All interactive functionality combined
+   Modern, ES6-ready interactive behavior
    ======================================== */
-
-// ========================================
-// 1. DOM ELEMENTS
-// ========================================
 
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const navMenu = document.getElementById('navMenu');
-const navLinks = document.querySelectorAll('nav a');
+const navLinks = Array.from(document.querySelectorAll('nav a'));
 const backToTopBtn = document.getElementById('backToTop');
 const contactForm = document.getElementById('contactForm');
 const eventsCarousel = document.getElementById('eventsCarousel');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
-
-const slides = document.querySelectorAll('.slide');
-const formInputs = contactForm ? contactForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]') : [];
-
-// ========================================
-// 2. VARIABLES
-// ========================================
+const slides = Array.from(document.querySelectorAll('.slide'));
+const eventSlides = Array.from(document.querySelectorAll('.event-slide'));
+const formInputs = contactForm ? Array.from(contactForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select')) : [];
 
 let currentSlide = 0;
 let currentEventSlide = 0;
-const eventSlides = document.querySelectorAll('.event-slide');
 
-// ========================================
-// 3. MOBILE MENU TOGGLE
-// ========================================
+const debounce = (fn, wait = 120) => {
+    let timeoutId;
+    return (...args) => {
+        clearTimeout(timeoutId);
+        timeoutId = window.setTimeout(() => fn(...args), wait);
+    };
+};
 
-if (mobileMenuBtn) {
-    mobileMenuBtn.addEventListener('click', function() {
-        if (navMenu) {
-            const isOpen = navMenu.classList.toggle('show');
-            mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        }
-    });
-}
+const clampIndex = (value, length) => ((value % length) + length) % length;
 
-// Close menu when a link is clicked
-navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-        if (navMenu) {
-            navMenu.classList.remove('show');
-        }
-        if (mobileMenuBtn) {
-            mobileMenuBtn.setAttribute('aria-expanded', 'false');
-        }
-        
-        // Update active link
-        navLinks.forEach(l => l.classList.remove('active'));
-        this.classList.add('active');
-    });
-});
+const closeMobileNav = () => {
+    if (!navMenu || !mobileMenuBtn) return;
+    navMenu.classList.remove('show');
+    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+};
 
-// Close menu when clicking outside
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('nav') && !e.target.closest('.mobile-menu-btn')) {
-        if (navMenu) {
-            navMenu.classList.remove('show');
-        }
-    }
-});
+const toggleMobileNav = () => {
+    if (!navMenu || !mobileMenuBtn) return;
+    const isOpen = navMenu.classList.toggle('show');
+    mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+};
 
-// ========================================
-// 4. SLIDESHOW FUNCTIONALITY
-// ========================================
+const updateActiveNavLink = () => {
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+    const scrollPosition = window.scrollY + 200;
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    let activeSectionId = null;
 
-function showSlide(n) {
-    if (!slides.length) return;
-
-    slides.forEach(slide => {
-        slide.classList.remove('active', 'fade');
-    });
-    
-    if (n >= slides.length) {
-        currentSlide = 0;
-    } else if (n < 0) {
-        currentSlide = slides.length - 1;
-    }
-    
-    slides[currentSlide].classList.add('active', 'fade');
-}
-
-function nextSlide() {
-    currentSlide++;
-    showSlide(currentSlide);
-}
-
-if (slides.length) {
-    // Auto-advance slideshow every 5 seconds
-    setInterval(nextSlide, 5000);
-
-    // Initialize slideshow
-    showSlide(currentSlide);
-}
-
-// ========================================
-// 5. EVENT CAROUSEL FUNCTIONALITY
-// ========================================
-
-function showEventSlide(n) {
-    if (!eventsCarousel || !eventSlides.length) return;
-    const totalSlides = eventSlides.length;
-    const offset = -n * 100;
-    eventsCarousel.style.transform = `translateX(${offset}%)`;
-}
-
-function nextEventSlide() {
-    currentEventSlide++;
-    if (currentEventSlide >= eventSlides.length) {
-        currentEventSlide = 0;
-    }
-    showEventSlide(currentEventSlide);
-}
-
-function prevEventSlide() {
-    currentEventSlide--;
-    if (currentEventSlide < 0) {
-        currentEventSlide = eventSlides.length - 1;
-    }
-    showEventSlide(currentEventSlide);
-}
-
-// Event listeners for carousel buttons
-if (nextBtn) {
-    nextBtn.addEventListener('click', nextEventSlide);
-}
-
-if (prevBtn) {
-    prevBtn.addEventListener('click', prevEventSlide);
-}
-
-// Auto advance event carousel every 8 seconds
-if (eventSlides.length) {
-    setInterval(nextEventSlide, 8000);
-}
-
-// ========================================
-// 6. SMOOTH SCROLLING
-// ========================================
-
-navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        
-        // Only prevent default for anchor links
-        if (href.startsWith('#')) {
-            e.preventDefault();
-            const targetId = href.substring(1);
-            const targetElement = document.getElementById(targetId);
-            
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+    if (sections.length) {
+        sections.forEach(section => {
+            if (scrollPosition >= section.offsetTop) {
+                activeSectionId = section.id;
             }
+        });
+    }
+
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href') || '';
+
+        if (href.startsWith('#')) {
+            link.classList.toggle('active', href === `#${activeSectionId}`);
+        } else {
+            const sanitizedHref = href.split('/').pop();
+            const isIndexAlias = (!sanitizedHref || sanitizedHref === 'index.html') && (currentPath === '' || currentPath === 'index.html');
+            link.classList.toggle('active', sanitizedHref === currentPath || isIndexAlias);
         }
     });
-});
+};
 
-// ========================================
-// 7. ACTIVE NAV LINK ON SCROLL
-// ========================================
-
-function toggleBackToTop() {
-    if (!backToTopBtn) return;
-
-    if (window.scrollY > 300) {
-        backToTopBtn.classList.add('show');
-    } else {
-        backToTopBtn.classList.remove('show');
+const scrollToTarget = id => {
+    const target = document.getElementById(id);
+    if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-}
+};
 
-window.addEventListener('scroll', debounce(function() {
-    updateActiveNavLink();
-    toggleBackToTop();
-}, 80));
-
-// ========================================
-// 8. BACK TO TOP BUTTON
-// ========================================
-
-
-if (backToTopBtn) {
-    backToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+const showSlide = index => {
+    if (!slides.length) return;
+    currentSlide = clampIndex(index, slides.length);
+    slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle('active', slideIndex === currentSlide);
     });
-}
+};
 
-// ========================================
-// 9. FORM VALIDATION & SUBMISSION
-// ========================================
+const nextSlide = () => showSlide(currentSlide + 1);
 
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Reset previous states
-        const formGroups = contactForm.querySelectorAll('.form-group');
+const showEventSlide = index => {
+    if (!eventsCarousel || !eventSlides.length) return;
+    currentEventSlide = clampIndex(index, eventSlides.length);
+    eventsCarousel.style.transform = `translateX(-${currentEventSlide * 100}%)`;
+};
+
+const nextEventSlide = () => showEventSlide(currentEventSlide + 1);
+const prevEventSlide = () => showEventSlide(currentEventSlide - 1);
+
+const showError = (fieldId, message) => {
+    const field = contactForm?.querySelector(`#${fieldId}`);
+    if (!field) return;
+    const formGroup = field.closest('.form-group');
+    const errorMsg = formGroup?.querySelector('.error-msg');
+
+    formGroup?.classList.add('error');
+    if (errorMsg) errorMsg.textContent = message;
+};
+
+const clearError = field => {
+    const formGroup = field.closest('.form-group');
+    const errorMsg = formGroup?.querySelector('.error-msg');
+
+    formGroup?.classList.remove('error');
+    if (errorMsg) errorMsg.textContent = '';
+};
+
+const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+const enhanceImages = () => {
+    document.querySelectorAll('img').forEach(img => {
+        img.decoding = 'async';
+        if (!img.closest('.hero')) {
+            img.loading = 'lazy';
+        }
+    });
+};
+
+const initializeObserver = () => {
+    if (!('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+
+    document.querySelectorAll('.card, .service-card, .ministry-card, .gallery-item, .event-item, .testimonial-block').forEach(el => {
+        el.classList.add('will-animate');
+        observer.observe(el);
+    });
+};
+
+const setupContactForm = () => {
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', event => {
+        event.preventDefault();
         const formStatus = document.getElementById('formStatus');
-        
-        formGroups.forEach(group => group.classList.remove('error'));
-        formStatus.textContent = '';
-        
-        // Get form values
-        const name = contactForm.querySelector('#name').value.trim();
-        const email = contactForm.querySelector('#email').value.trim();
-        const subject = contactForm.querySelector('#subject').value;
-        const message = contactForm.querySelector('#message').value.trim();
-        
         let isValid = true;
-        
-        // Validate name
+
+        formInputs.forEach(input => clearError(input));
+        if (formStatus) {
+            formStatus.className = 'form-status';
+            formStatus.textContent = '';
+        }
+
+        const name = contactForm.querySelector('#name')?.value.trim() || '';
+        const email = contactForm.querySelector('#email')?.value.trim() || '';
+        const subject = contactForm.querySelector('#subject')?.value || '';
+        const message = contactForm.querySelector('#message')?.value.trim() || '';
+
         if (!name) {
             showError('name', 'Please enter your full name');
             isValid = false;
         }
-        
-        // Validate email
+
         if (!email) {
             showError('email', 'Please enter your email address');
             isValid = false;
@@ -233,278 +171,147 @@ if (contactForm) {
             showError('email', 'Please enter a valid email address');
             isValid = false;
         }
-        
-        // Validate subject
+
         if (!subject) {
             showError('subject', 'Please select a subject');
             isValid = false;
         }
-        
-        // Validate message
-        if (!message) {
-            showError('message', 'Please enter your message');
-            isValid = false;
-        } else if (message.length < 10) {
-            showError('message', 'Message must be at least 10 characters long');
+
+        if (!message || message.length < 10) {
+            showError('message', 'Please enter a message with at least 10 characters');
             isValid = false;
         }
-        
+
+        if (!formStatus) return;
+
         if (isValid) {
             formStatus.classList.add('success');
-            formStatus.classList.remove('error');
             formStatus.textContent = '✓ Thank you! Your message has been sent successfully. We will get back to you soon.';
-            
             contactForm.reset();
-            
-            console.log({
-                name: name,
-                email: email,
-                subject: subject,
-                message: message
-            });
-            
-            setTimeout(function() {
+            window.setTimeout(() => {
                 formStatus.textContent = '';
                 formStatus.classList.remove('success');
             }, 5000);
         } else {
             formStatus.classList.add('error');
-            formStatus.classList.remove('success');
             formStatus.textContent = '✗ Please fix the errors above and try again.';
         }
     });
 
-    contactForm.addEventListener('input', function(e) {
-        const field = e.target;
-        const formGroup = field.closest('.form-group');
-        if (!formGroup) return;
-        formGroup.classList.remove('error');
-        const errorMsg = formGroup.querySelector('.error-msg');
-        if (errorMsg) {
-            errorMsg.textContent = '';
+    contactForm.addEventListener('input', event => {
+        const target = event.target;
+        if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
+            clearError(target);
         }
     });
 
-    formInputs.forEach(input => {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const nextInput = findNextInput(this, formInputs);
-                if (nextInput) {
-                    nextInput.focus();
-                }
-            }
+    formInputs.forEach((input, index) => {
+        input.addEventListener('keypress', event => {
+            if (event.key !== 'Enter') return;
+            event.preventDefault();
+            const nextInput = formInputs[index + 1];
+            if (nextInput) nextInput.focus();
         });
     });
-}
-
-function showError(fieldId, message) {
-    const field = contactForm.querySelector('#' + fieldId);
-    const formGroup = field.closest('.form-group');
-    const errorMsg = formGroup.querySelector('.error-msg');
-    
-    formGroup.classList.add('error');
-    errorMsg.textContent = message;
-}
-
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// ========================================
-// 11. UPDATE FOOTER YEAR DYNAMICALLY
-// ========================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    const currentYear = new Date().getFullYear();
-    const footerYear = document.querySelector('footer p');
-    
-    if (footerYear) {
-        footerYear.textContent = footerYear.textContent.replace('2026', currentYear);
-    }
-});
-
-// ========================================
-// 12. ACCESSIBILITY - KEYBOARD NAVIGATION
-// ========================================
-
-document.addEventListener('keydown', function(e) {
-    // Escape key closes mobile menu
-    if (e.key === 'Escape') {
-        if (navMenu) {
-            navMenu.classList.remove('show');
-        }
-    }
-    
-    // Ctrl+ArrowUp for back to top
-    if (e.key === 'ArrowUp' && e.ctrlKey) {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-});
-
-// ========================================
-// 13. PREVENT FORM SUBMISSION ENTER KEY
-// ========================================
-
-formInputs.forEach(input => {
-    input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const nextInput = findNextInput(this, formInputs);
-            if (nextInput) {
-                nextInput.focus();
-            }
-        }
-    });
-});
-
-function findNextInput(currentInput, inputs) {
-    const inputArray = Array.from(inputs);
-    const currentIndex = inputArray.indexOf(currentInput);
-    return inputArray[currentIndex + 1] || null;
-}
-
-// ========================================
-// 14. INTERSECTION OBSERVER FOR ANIMATIONS
-// ======================================== 
-
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
 };
 
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+const initializeNavigation = () => {
+    mobileMenuBtn?.addEventListener('click', toggleMobileNav);
+
+    document.addEventListener('click', event => {
+        if (!event.target.closest('nav') && !event.target.closest('.mobile-menu-btn')) {
+            closeMobileNav();
         }
     });
-}, observerOptions);
 
-// Observe cards and sections for animation
-document.querySelectorAll('.card, .service-card, .ministry-card, .gallery-item').forEach(el => {
-    observer.observe(el);
-});
-
-// ========================================
-// 15. UTILITY FUNCTIONS
-// ========================================
-
-// Debounce function for scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Add animation keyframes dynamically
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// ========================================
-// 16. PERFORMANCE OPTIMIZATION
-// ========================================
-
-// Lazy load images if supported
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                if (img.dataset.src) {
-                    img.src = img.dataset.src;
-                }
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
-}
-
-// ========================================
-// 17. ERROR HANDLING
-// ========================================
-
-window.addEventListener('error', function(e) {
-    console.error('Error:', e.message);
-    // Could log to analytics or error tracking service
-});
-
-// Handle promise rejections
-window.addEventListener('unhandledrejection', function(e) {
-    console.error('Unhandled Promise Rejection:', e.reason);
-});
-
-// ========================================
-// 18. INITIALIZATION
-// ========================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize tooltips if any
-    initializeTooltips();
-    
-    // Set initial active nav link
-    updateActiveNavLink();
-});
-
-function updateActiveNavLink() {
-    const sections = document.querySelectorAll('section[id], footer[id]');
-    if (!sections.length) return;
-
-    const scrollPosition = window.scrollY + 220;
-    let current = sections[0].id;
-
-    sections.forEach(section => {
-        if (scrollPosition >= section.offsetTop) {
-            current = section.id;
-        }
-    });
+    window.addEventListener('resize', debounce(() => {
+        if (window.innerWidth > 768) closeMobileNav();
+    }, 150));
 
     navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        link.classList.toggle('active', href === `#${current}`);
-    });
-}
-
-function initializeTooltips() {
-    const tooltips = document.querySelectorAll('[data-tooltip]');
-    tooltips.forEach(element => {
-        element.addEventListener('mouseenter', function() {
-            const tooltip = document.createElement('div');
-            tooltip.className = 'tooltip';
-            tooltip.textContent = this.getAttribute('data-tooltip');
-            document.body.appendChild(tooltip);
+        link.addEventListener('click', event => {
+            closeMobileNav();
+            if (link.getAttribute('href')?.startsWith('#')) {
+                event.preventDefault();
+                scrollToTarget(link.getAttribute('href').slice(1));
+            }
+            navLinks.forEach(item => item.classList.remove('active'));
+            link.classList.add('active');
         });
     });
-}
+};
 
-// ========================================
-// 19. CONSOLE MESSAGE
-// ========================================
+const initializeSlideshow = () => {
+    if (!slides.length) return;
+    showSlide(0);
+    window.setInterval(nextSlide, 5000);
+};
 
-console.log('%c Welcome to RCCG Christ the Anchor Parish', 'font-size: 16px; color: #006400; font-weight: bold;');
-console.log('%c Anchored in Christ | Growing in Grace | Making Heaven Together', 'font-size: 12px; color: #FFD700; font-style: italic;');
-console.log('%c Scripture: "But as for me and my household, we will serve the Lord." - Joshua 24:15', 'font-size: 11px; color: #1a365d;');
+const initializeEventCarousel = () => {
+    if (!eventSlides.length) return;
+    showEventSlide(0);
+    nextBtn?.addEventListener('click', nextEventSlide);
+    prevBtn?.addEventListener('click', prevEventSlide);
+    window.setInterval(nextEventSlide, 8000);
+};
+
+const updateFooterYear = () => {
+    const currentYear = new Date().getFullYear();
+    const yearNodes = Array.from(document.querySelectorAll('[data-current-year], .js-current-year'));
+    yearNodes.forEach(el => {
+        el.textContent = String(currentYear);
+    });
+
+    const footerText = document.querySelector('footer p');
+    if (footerText) {
+        footerText.textContent = footerText.textContent.replace(/\d{4}/, String(currentYear));
+    }
+};
+
+const toggleBackToTop = () => {
+    if (!backToTopBtn) return;
+    backToTopBtn.classList.toggle('show', window.scrollY > 300);
+};
+
+const initializeAccessibility = () => {
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            closeMobileNav();
+        }
+
+        if (event.key === 'ArrowUp' && event.ctrlKey) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+};
+
+const initialize = () => {
+    initializeNavigation();
+    initializeSlideshow();
+    initializeEventCarousel();
+    setupContactForm();
+    initializeObserver();
+    enhanceImages();
+    updateFooterYear();
+    updateActiveNavLink();
+    initializeAccessibility();
+
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    window.addEventListener('scroll', debounce(() => {
+        updateActiveNavLink();
+        toggleBackToTop();
+    }, 80));
+
+    window.addEventListener('error', event => {
+        console.error('Script error:', event.message, 'at', `${event.filename}:${event.lineno}`);
+    });
+
+    window.addEventListener('unhandledrejection', event => {
+        console.error('Unhandled promise rejection:', event.reason);
+    });
+};
+
+document.addEventListener('DOMContentLoaded', initialize);
